@@ -1,0 +1,58 @@
+.log-reg-form {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    padding: 32px;
+}
+
+.log-reg-form-field {
+    display: flex;
+    flex-flow: column nowrap;
+    margin-bottom: 8px;
+}
+
+.log-reg-form-label {
+    margin-bottom: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #868789;
+}
+
+.log-reg-form-input {
+    padding: 4px 8px;
+    background-color: transparent;
+    border: 1px solid #343536;
+    border-radius: 4px;
+    color: #d5d8da;
+    transition: border 0.15s ease;
+    font-size: 18px;
+    font-family: "Roboto", sans-serif;
+}
+
+.log-reg-form-input:focus {
+    outline: none;
+    border: 1px solid #d5d8da;
+}
+
+.log-reg-error-div {
+    height: 14px;
+    margin-top: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #bf1e2d;
+}
+
+.log-reg-btn-container {
+    margin-bottom: 16px;
+}
+
+.log-reg-btn {
+    width: 80px;
+}
+
+.switch-type-container {
+    color: #0079d3;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
