@@ -6,9 +6,13 @@
     width: 100%;
     position: fixed;
     top: 0;
-    padding: 4px 16px;
+    padding: 4px 0;
     background-color: #1a1a1b;
     border-bottom: 1px solid #343536;
+}
+
+.nav-logo-area {
+    margin-left: 16px;
 }
 
 .nav-logo-text {
@@ -33,6 +37,7 @@
     background-color: #272729;
     border: 1px solid #343536;
     border-radius: 4px;
+    cursor: pointer;
 }
 
 .no-active,
@@ -49,4 +54,9 @@
 }
 
 .nav-user-area {
+    margin-right: 16px;
+}
+
+.btn-nav-login {
+    width: 80px;
 }

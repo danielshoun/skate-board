@@ -1,6 +1,4 @@
 /* TODO Add site wide styles */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
-
 html {
     box-sizing: border-box;
     background-color: #030303;
@@ -14,4 +12,15 @@ body {
 
 .content-wrapper {
     padding-top: 80px;
+}
+
+.btn-primary {
+    color: #d5d8da;
+    background-color: #0079d3;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    margin: 4px;
+    padding: 4px 8px;
 }
