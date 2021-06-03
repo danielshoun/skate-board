@@ -1,17 +1,16 @@
 import React, {useState, useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import NavBar from "./components/NavBar";
 import {authenticate} from "./store/session";
 
 function App() {
-    const user = useSelector(state => state.session.user);
     const dispatch = useDispatch();
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
         (async () => {
-            await dispatch(authenticate())
+            await dispatch(authenticate());
             setLoaded(true);
         })();
     }, [dispatch]);
