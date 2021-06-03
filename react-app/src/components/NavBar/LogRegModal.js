@@ -32,6 +32,7 @@ const LogRegModal = ({initialType, closeModal}) => {
     }
 
     async function handleDemo(e) {
+        e.preventDefault();
         const data = await dispatch(login("demo@aa.io", "password"));
         if (data.errors) {
             setErrors(data.errors);

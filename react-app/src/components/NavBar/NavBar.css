@@ -13,6 +13,7 @@
 
 .nav-logo-area {
     margin-left: 16px;
+    cursor: pointer;
 }
 
 .nav-logo-text {
@@ -55,8 +56,48 @@
 
 .nav-user-area {
     margin-right: 16px;
+    position: relative;
 }
 
 .btn-nav-login {
     width: 80px;
+}
+
+.btn-nav-user {
+    font-size: 20px;
+}
+
+.nav-user-menu {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    background-color: #272729;
+    display: flex;
+    flex-flow: column nowrap;
+    width: 128px;
+    border: 1px solid #343536;
+}
+
+.nav-user-menu-item {
+    display: flex;
+    flex-flow: row nowrap;
+    padding: 12px 8px;
+    border-bottom: 1px solid #343536;
+    opacity: 0.7;
+    cursor: pointer;
+    transition: opacity 0.25s ease, font-weight 0.25s ease;
+}
+
+.nav-user-menu-item:hover {
+    opacity: 1.0;
+    font-weight: bold;
+}
+
+.btn-user-menu {
+    width: 20px;
+    margin-right: 8px;
+}
+
+.user-menu-text {
+    font-size: 12px;
 }
