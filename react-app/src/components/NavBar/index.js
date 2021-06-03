@@ -1,9 +1,11 @@
 import React, {useState} from "react";
+import {useSelector} from "react-redux";
 import "./NavBar.css";
 import {NavLink} from "react-router-dom";
 import LogoutButton from "../auth/LogoutButton";
 
 const NavBar = ({setAuthenticated}) => {
+    const user = useSelector(state => state.session.user);
     const [activeCommunity, setActiveCommunity] = useState("");
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -25,7 +27,13 @@ const NavBar = ({setAuthenticated}) => {
                 </div>
             </div>
             <div className="nav-user-area">
-                
+                {user ?
+                    <i className="fas fa-user-circle"/> :
+                    <>
+                        <button>Log In</button>
+                        <button>Log Out</button>
+                    </>
+                }
             </div>
             {/*<ul className="nav-ul">*/}
             {/*    <li>*/}
