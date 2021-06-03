@@ -41,6 +41,11 @@ const LogRegModal = ({initialType, closeModal}) => {
     }
 
     function handleTypeSwitch() {
+        setUsername("");
+        setPassword("");
+        setEmail("");
+        setConfirmPassword("");
+        setErrors({});
         setType(prevState => prevState === "login" ? "register" : "login");
     }
 
@@ -50,7 +55,6 @@ const LogRegModal = ({initialType, closeModal}) => {
                 className="log-reg-form"
                 onSubmit={handleSubmit}
             >
-                {type === "register" &&
                 <div className="log-reg-form-field">
                     <label
                         className="log-reg-form-label"
@@ -69,11 +73,11 @@ const LogRegModal = ({initialType, closeModal}) => {
                         {errors.email && errors.email.map(error => {
                             return (
                                 <div>{error}</div>
-                            )
+                            );
                         })}
                     </div>
                 </div>
-                }
+                {type === "register" &&
                 <div className="log-reg-form-field">
                     <label
                         className="log-reg-form-label"
@@ -92,10 +96,11 @@ const LogRegModal = ({initialType, closeModal}) => {
                         {errors.username && errors.username.map(error => {
                             return (
                                 <div>{error}</div>
-                            )
+                            );
                         })}
                     </div>
                 </div>
+                }
                 <div className="log-reg-form-field">
                     <label
                         className="log-reg-form-label"
@@ -114,7 +119,7 @@ const LogRegModal = ({initialType, closeModal}) => {
                         {errors.password && errors.password.map(error => {
                             return (
                                 <div>{error}</div>
-                            )
+                            );
                         })}
                     </div>
                 </div>
@@ -137,7 +142,7 @@ const LogRegModal = ({initialType, closeModal}) => {
                         {errors.confirmPassword && errors.confirmPassword.map(error => {
                             return (
                                 <div>{error}</div>
-                            )
+                            );
                         })}
                     </div>
                 </div>
