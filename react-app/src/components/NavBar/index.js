@@ -88,6 +88,7 @@ const NavBar = () => {
                 onRequestClose={closeModal}
                 style={modalStyles}
                 closeTimeoutMS={120}
+                appElement={document.getElementById("root")}
             >
                 <LogRegModal
                     initialType={modalType}
