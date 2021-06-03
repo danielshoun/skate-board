@@ -30,7 +30,7 @@ def get_owned_boards():
 def get_board(board_id):
     board = Board.query.get(board_id)
     if not board:
-        return {"errors": f"No board exists with ID: {board_id}"}, 400
+        return {"errors": f"No board exists with ID: {board_id}"}, 404
     membership_check = check_board_membership(board, current_user)
     if "errors" in membership_check:
         return membership_check
@@ -54,4 +54,37 @@ def create_board():
         db.session.add(board)
         db.session.commit()
         return board.to_dict()
+    return {"errors": validation_errors_to_error_messages(form.errors)}, 404
+
+
+@board_routes.route("/<int:board_id>", methods=["PUT"])
+@login_required
+def update_board(board_id):
+    form = BoardForm()
+    form["csrf_token"].data = request.cookies["csrf_token"]
+    if form.validate_on_submit():
+        board = Board.query.get(board_id)
+        if not board:
+            return {"errors": f"No board exists with ID: {board_id}"}, 404
+        if board.owner_id != current_user.id:
+            return {"errors": "You must be the owner of a board to edit it."}, 401
+        board.name = form.data["name"]
+        board.description = form.data["description"]
+        board.private = form.data["private"]
+        db.session.add(board)
+        db.session.commit()
+        return board.to_dict()
     return {"errors": validation_errors_to_error_messages(form.errors)}, 400
+
+
+@board_routes.route("/<int:board_id>", methods=["DELETE"])
+@login_required
+def delete_board(board_id):
+    board = Board.query.get(board_id)
+    if not board:
+        return {"errors": f"No board exists with ID: {board_id}"}, 404
+    if board.owner_id == current_user.id:
+        db.session.delete(board)
+        db.session.commit()
+        return board.to_dict()
+    return {"errors": "You must be the owner of a board to delete it."}, 401
