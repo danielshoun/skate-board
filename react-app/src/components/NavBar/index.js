@@ -4,13 +4,12 @@ import {useHistory} from "react-router-dom";
 import "./NavBar.css";
 import {logout} from "../../store/session";
 import LogRegModal from "./LogRegModal";
+import NavDropdown from "./NavDropdown";
 
 const NavBar = () => {
     const user = useSelector(state => state.session.user);
     const dispatch = useDispatch();
     const history = useHistory();
-    const [dropdownOpen, setDropdownOpen] = useState(false);
-    const [dropdownBoards, setDropdownBoards] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
     const [modalType, setModalType] = useState();
     const [userMenuOpen, setUserMenuOpen] = useState(false);
@@ -22,43 +21,6 @@ const NavBar = () => {
             setModalOpen(true);
         }
     }, [modalType]);
-
-    useEffect(() => {
-        function handleOutsideClick(e) {
-            if (e.target.className !== "dropdown-menu-item") {
-                setDropdownOpen(false);
-            }
-        }
-
-        if (dropdownOpen === true) {
-            if (user) {
-                (async () => {
-                    const res = await fetch("/api/boards/joined");
-                    if (res.ok) {
-                        const data = await res.json();
-                        setDropdownBoards(data);
-                    }
-                })();
-            }
-            document.addEventListener("click", handleOutsideClick);
-        }
-        return () => {
-            document.removeEventListener("click", handleOutsideClick);
-        };
-    }, [user, dropdownOpen]);
-
-    function handleMenuItemClick(e, id) {
-        e.stopPropagation();
-        console.log(id);
-        if (id === "directory") {
-            history.push("/directory");
-        } else if (id === "create") {
-            history.push("/board/new");
-        } else {
-            history.push(`/board/${id}`);
-        }
-        setDropdownOpen(false);
-    }
 
     function openModal(type) {
         setModalType(type);
@@ -97,49 +59,7 @@ const NavBar = () => {
                     <span className="nav-logo-text">Skate Board</span>
                 </div>
                 <div className="nav-dropdown-area">
-                    <div
-                        className="dropdown-container"
-                        onClick={() => setDropdownOpen(prevState => !prevState)}
-                    >
-                        <span
-                            className={"dropdown-active-text"}>
-                            Go to board...
-                        </span>
-                        <i className={`fas fa-chevron-down dropdown-chevron${dropdownOpen ? " active-chevron" : ""}`}/>
-                        {dropdownOpen &&
-                        <div className="dropdown-menu">
-                            {user &&
-                            <div className="dropdown-header">YOUR BOARDS</div>
-                            }
-                            {dropdownBoards.map(board => {
-                                return (
-                                    <div
-                                        key={board.id}
-                                        className="dropdown-menu-item"
-                                        onClick={(e) => handleMenuItemClick(e, board.id)}
-                                    >
-                                        {board.name}
-                                    </div>
-                                );
-                            })}
-                            <div className="dropdown-header">OTHER</div>
-                            <div
-                                className="dropdown-menu-item"
-                                onClick={(e) => handleMenuItemClick(e, "directory")}
-                            >
-                                Directory
-                            </div>
-                            {user &&
-                            <div
-                                className="dropdown-menu-item"
-                                onClick={(e) => handleMenuItemClick(e, "create")}
-                            >
-                                Create New Board
-                            </div>
-                            }
-                        </div>
-                        }
-                    </div>
+                    <NavDropdown/>
                 </div>
                 <div className="nav-user-area"
                      onMouseEnter={() => user ? setUserMenuOpen(true) : null}
