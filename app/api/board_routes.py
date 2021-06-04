@@ -3,15 +3,25 @@ from flask_login import login_required, current_user
 from app.models import Board, db
 from app.forms import BoardForm
 from app.utils import validation_errors_to_error_messages, check_board_membership
-from sqlalchemy import not_
+from sqlalchemy import not_, func, desc
 
 board_routes = Blueprint("boards", __name__)
 
 
 @board_routes.route("")
 def get_public_boards():
-    boards = Board.query.filter(not_(Board.private)).all()
-    return jsonify([board.to_dict() for board in boards])
+    queries = [not_(Board.private)]
+    if request.args.get("search"):
+        queries.append(Board.name.ilike(f"%{request.args.get('search')}%"))
+    boards = db.session\
+        .query(Board, func.count("memberships.board_id").label("member_count"))\
+        .join("members")\
+        .group_by(Board)\
+        .filter(*queries)\
+        .order_by(desc("member_count"))\
+        .paginate(page=request.args.get("page", default=1, type=int), max_per_page=20)
+    result = {"boards": [board.Board.to_dict() for board in boards.items], "page_count": boards.pages}
+    return jsonify(result)
 
 
 @board_routes.route("/joined")

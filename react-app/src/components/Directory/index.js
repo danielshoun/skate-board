@@ -8,28 +8,35 @@ function useQuery() {
 
 const Directory = () => {
     const query = useQuery();
+    const [searchTerm, setSearchTerm] = useState(query.get("search"));
+    const [pageNum, setPageNum] = useState(query.get("page"));
+    const [pageCount, setPageCount] = useState(1);
     const history = useHistory();
     const [searchInput, setSearchInput] = useState("");
     const [boards, setBoards] = useState([]);
 
     useEffect(() => {
         (async () => {
-            const res = await fetch("/api/boards");
+            const res = await fetch(
+                `/api/boards?` +
+                `${searchTerm ? `search=${searchTerm}${pageNum ? "&" : ""}` : ""}` +
+                `${pageNum ? `page=${pageNum}` : ""}`
+            );
             if (res.ok) {
                 const data = await res.json();
-                setBoards(data);
+                setBoards(data.boards);
+                setPageCount(data.page_count);
             }
         })();
-    }, []);
-
-    console.log(boards);
+    }, [searchTerm, pageNum]);
 
     function handleSearchEnter(e) {
         if (e.key === "Enter") {
             history.push(`/directory?search=${searchInput}`);
+            setSearchTerm(searchInput);
         }
     }
-
+    
     return (
         <div className="directory-container">
             <div className="directory-search-container">
@@ -45,8 +52,10 @@ const Directory = () => {
             </div>
             <div className="directory-content-container">
                 <div className="directory-content-header">
-                    {query.get("search") ? `SEARCH FOR: ${query.get("search").toUpperCase()}` : "PUBLIC BOARDS"} -
-                    PAGE {query.get("page") || 1}
+                    <span>
+                        {query.get("search") ? `SEARCH FOR: ${query.get("search").toUpperCase()}` : "PUBLIC BOARDS"} -
+                        PAGE {query.get("page") || 1}
+                    </span>
                 </div>
                 <div className="directory-board-list">
                     {boards.map(board => {
@@ -76,7 +85,7 @@ const Directory = () => {
                 </div>
             </div>
         </div>
-);
+    );
 };
 
 export default Directory;
