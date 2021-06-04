@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useHistory, useLocation} from "react-router-dom";
 import "./Directory.css";
+import {authenticate} from "../../store/session";
 import PageController from "../common/PageController";
 
 function useQuery() {
@@ -10,6 +11,7 @@ function useQuery() {
 
 const Directory = () => {
     const user = useSelector(state => state.session.user);
+    const dispatch = useDispatch();
     const query = useQuery();
     const [searchTerm, setSearchTerm] = useState(query.get("search"));
     const [pageNum, setPageNum] = useState(Number(query.get("page")) || 1);
@@ -40,6 +42,36 @@ const Directory = () => {
         }
     }
 
+    async function handleJoin(board) {
+        const res = await fetch(`/api/boards/${board.id}/join`, {
+            method: "POST"
+        });
+        if (res.ok) {
+            const data = await res.json();
+            await dispatch(authenticate());
+            setBoards(prevState => {
+                const updateIndex = prevState.findIndex(findBoard => findBoard.id === board.id);
+                return [...prevState.slice(0, updateIndex), data, ...prevState.slice(updateIndex + 1, prevState.length)]
+            });
+        }
+    }
+
+    async function handleLeave(board) {
+        const res = await fetch(`/api/boards/${board.id}/leave`, {
+            method: "POST"
+        });
+        if (res.ok) {
+            const data = await res.json();
+            await dispatch(authenticate());
+            setBoards(prevState => {
+                const updateIndex = prevState.findIndex(findBoard => findBoard.id === board.id);
+                return [...prevState.slice(0, updateIndex), data, ...prevState.slice(updateIndex + 1, prevState.length)]
+            });
+        }
+    }
+
+    console.log(boards);
+
     return (
         <div className="directory-container">
             <div className="directory-search-container">
@@ -68,7 +100,7 @@ const Directory = () => {
                 </div>
                 <div className="directory-board-list">
                     {boards.map(board => {
-                        const user_is_member = board.id in user.boards_joined;
+                        const userIsMember = board.id in user.boards_joined;
 
                         return (
                             <div className="directory-board-item" key={board.id}>
@@ -85,9 +117,10 @@ const Directory = () => {
                                         {board.member_count} user{board.member_count > 1 ? "s" : ""}
                                     </div>
                                     <button
-                                        className={`${user_is_member ? "btn-red" : "btn-primary"} directory-join-button`}
+                                        className={`${userIsMember ? "btn-red" : "btn-primary"} directory-join-button`}
+                                        onClick={() => userIsMember ? handleLeave(board) : handleJoin(board)}
                                     >
-                                        {user_is_member ? "Leave" : "Join"}
+                                        {userIsMember ? "Leave" : "Join"}
                                     </button>
                                 </div>
                             </div>

@@ -13,12 +13,12 @@ def get_public_boards():
     queries = [not_(Board.private)]
     if request.args.get("search"):
         queries.append(Board.name.ilike(f"%{request.args.get('search')}%"))
-    boards = db.session\
-        .query(Board, func.count("memberships.board_id").label("member_count"))\
-        .join("members")\
-        .group_by(Board)\
-        .filter(*queries)\
-        .order_by(desc("member_count"))\
+    boards = db.session \
+        .query(Board, func.count("memberships.board_id").label("member_count")) \
+        .join("members") \
+        .group_by(Board) \
+        .filter(*queries) \
+        .order_by(desc("member_count")) \
         .paginate(page=request.args.get("page", default=1, type=int), max_per_page=10)
     result = {"boards": [board.Board.to_dict() for board in boards.items], "page_count": boards.pages}
     return jsonify(result)
@@ -98,3 +98,31 @@ def delete_board(board_id):
         db.session.commit()
         return board.to_dict()
     return {"errors": "You must be the owner of a board to delete it."}, 401
+
+
+@board_routes.route("/<int:board_id>/join", methods=["POST"])
+@login_required
+def join_board(board_id):
+    board = Board.query.get(board_id)
+    if not board:
+        return {"errors": f"No board exists with ID: {board_id}"}, 404
+    if board.private:
+        return {"errors": "You must be invited to private boards"}, 401
+    board.members.append(current_user)
+    db.session.add(board)
+    db.session.commit()
+    return board.to_dict()
+
+
+@board_routes.route("/<int:board_id>/leave", methods=["POST"])
+@login_required
+def leave_board(board_id):
+    board = Board.query.get(board_id)
+    if not board:
+        return {"errors": f"No board exists with ID: {board_id}"}, 404
+
+    if not board.members.pop(board.members.index(current_user)):
+        return {"errors": "You must be a member of a board to leave it."}, 400
+    db.session.add(board)
+    db.session.commit()
+    return board.to_dict()
