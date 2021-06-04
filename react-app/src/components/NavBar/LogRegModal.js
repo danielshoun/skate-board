@@ -12,7 +12,7 @@ const modalStyles = {
         bottom: "auto",
         marginRight: "-50%",
         transform: "translate(-50%, -50%)",
-        backgroundColor: "#272729",
+        backgroundColor: "#1a1a1b",
         border: "none",
         padding: "0"
     },

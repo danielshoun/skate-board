@@ -30,10 +30,10 @@
 
 .new-board-form-input {
     padding: 4px 8px;
-    background-color: transparent;
+    background-color: #272729;;
     border: 1px solid #343536;
     border-radius: 4px;
-    color: #d5d8da;
+    color: #868789;
     transition: border 0.15s ease;
     font-size: 18px;
     font-family: "Roboto", sans-serif;
@@ -41,7 +41,7 @@
 
 .new-board-form-input:focus {
     outline: none;
-    border: 1px solid #d5d8da;
+    border: 1px solid #868789;
 }
 
 .new-board-error-div {
@@ -67,7 +67,7 @@
     width: 16px;
     height: 16px;
     margin-right: 8px;
-    border: 1px solid #d5d8da;
+    border: 1px solid #868789;
     border-radius: 50%;
     display: flex;
     justify-content: center;

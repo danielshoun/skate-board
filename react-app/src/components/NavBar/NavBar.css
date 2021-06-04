@@ -13,6 +13,7 @@
 
 .nav-logo-area {
     margin-left: 16px;
+    min-width: 200px;
     cursor: pointer;
 }
 
@@ -28,6 +29,9 @@
 }
 
 .nav-user-area {
+    min-width: 200px;
+    display: flex;
+    justify-content: right;
     margin-right: 16px;
     position: relative;
 }
