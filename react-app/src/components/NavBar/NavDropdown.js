@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
-import {useHistory} from "react-router-dom";
+import {useHistory, Link} from "react-router-dom";
 import "./NavDropdown.css";
 
 const NavDropdown = () => {
@@ -8,6 +8,7 @@ const NavDropdown = () => {
     const history = useHistory();
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [dropdownBoards, setDropdownBoards] = useState([]);
+    const [filteredBoards, setFilteredBoards] = useState([]);
     const [dropdownInput, setDropdownInput] = useState("");
 
     useEffect(() => {
@@ -28,11 +29,30 @@ const NavDropdown = () => {
                 })();
             }
             document.addEventListener("click", handleOutsideClick);
+        } else {
+            setDropdownInput("")
         }
         return () => {
             document.removeEventListener("click", handleOutsideClick);
         };
     }, [user, dropdownOpen]);
+
+    useEffect(() => {
+        if (user) {
+            if (dropdownInput.length > 0) {
+                setFilteredBoards(dropdownBoards.filter(board => board.name.toLowerCase().includes(dropdownInput.toLowerCase())));
+            } else {
+                setFilteredBoards([]);
+            }
+        }
+    }, [user, dropdownInput, dropdownBoards]);
+
+    function handleInputEnter(e) {
+        if (e.key === "Enter") {
+            history.push(`/directory?search=${dropdownInput}`);
+            setDropdownOpen(false);
+        }
+    }
 
     function handleMenuItemClick(e, id) {
         e.stopPropagation();
@@ -65,13 +85,14 @@ const NavDropdown = () => {
                         placeholder={user ? "Filter..." : "Search..."}
                         value={dropdownInput}
                         onChange={(e) => setDropdownInput(e.target.value)}
+                        onKeyDown={handleInputEnter}
                         onClick={(e) => e.stopPropagation()}
                     />
                 </div>
                 {user &&
                 <div className="dropdown-header">YOUR BOARDS</div>
                 }
-                {dropdownBoards.map(board => {
+                {filteredBoards.length > 0 && filteredBoards.map(board => {
                     return (
                         <div
                             key={board.id}
@@ -82,6 +103,27 @@ const NavDropdown = () => {
                         </div>
                     );
                 })}
+                {dropdownInput.length === 0 && dropdownBoards.map(board => {
+                    return (
+                        <div
+                            key={board.id}
+                            className="dropdown-menu-item"
+                            onClick={(e) => handleMenuItemClick(e, board.id)}
+                        >
+                            {board.name}
+                        </div>
+                    );
+                })}
+                {(filteredBoards.length === 0 && dropdownInput.length > 0) &&
+                <div className="not-found-item">
+                    <span>No boards found.{" "}
+                        <Link className="dropdown-search-link" to={`/directory?search=${dropdownInput}`}>
+                            Click here
+                        </Link>
+                        {" "}or press enter to search the directory instead.
+                    </span>
+                </div>
+                }
                 <div className="dropdown-header">OTHER</div>
                 <div
                     className="dropdown-menu-item"
@@ -101,6 +143,7 @@ const NavDropdown = () => {
             }
         </div>
     );
-};
+}
+;
 
 export default NavDropdown;
