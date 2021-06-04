@@ -27,6 +27,8 @@ const NavDropdown = () => {
                         setDropdownBoards(data);
                     }
                 })();
+            } else {
+                setDropdownBoards([])
             }
             document.addEventListener("click", handleOutsideClick);
         } else {
@@ -114,7 +116,7 @@ const NavDropdown = () => {
                         </div>
                     );
                 })}
-                {(filteredBoards.length === 0 && dropdownInput.length > 0) &&
+                {(filteredBoards.length === 0 && dropdownInput.length > 0 && user) &&
                 <div className="not-found-item">
                     <span>No boards found.{" "}
                         <Link className="dropdown-search-link" to={`/directory?search=${dropdownInput}`}>
