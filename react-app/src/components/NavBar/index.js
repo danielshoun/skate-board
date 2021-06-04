@@ -63,7 +63,7 @@ const NavBar = () => {
         return () => {
             document.removeEventListener("click", handleOutsideClick);
         };
-    }, [dropdownOpen]);
+    }, [user, dropdownOpen]);
 
     function handleMenuItemClick(e, id) {
         e.stopPropagation();
@@ -73,7 +73,7 @@ const NavBar = () => {
         } else if (id === "create") {
             history.push("/board/new");
         } else {
-            history.push(`/board/${id}`)
+            history.push(`/board/${id}`);
         }
         setDropdownOpen(false);
     }
@@ -126,6 +126,9 @@ const NavBar = () => {
                         <i className={`fas fa-chevron-down dropdown-chevron${dropdownOpen ? " active-chevron" : ""}`}/>
                         {dropdownOpen &&
                         <div className="dropdown-menu">
+                            {user &&
+                            <div className="dropdown-header">YOUR BOARDS</div>
+                            }
                             {dropdownBoards.map(board => {
                                 return (
                                     <div
@@ -137,18 +140,21 @@ const NavBar = () => {
                                     </div>
                                 );
                             })}
+                            <div className="dropdown-header">OTHER</div>
                             <div
                                 className="dropdown-menu-item"
                                 onClick={(e) => handleMenuItemClick(e, "directory")}
                             >
                                 Directory
                             </div>
+                            {user &&
                             <div
                                 className="dropdown-menu-item"
                                 onClick={(e) => handleMenuItemClick(e, "create")}
                             >
                                 Create New Board
                             </div>
+                            }
                         </div>
                         }
                     </div>
@@ -201,18 +207,11 @@ const NavBar = () => {
                     }
                 </div>
             </nav>
-            <Modal
-                isOpen={modalOpen}
-                onRequestClose={closeModal}
-                style={modalStyles}
-                closeTimeoutMS={120}
-                appElement={document.getElementById("root")}
-            >
-                <LogRegModal
-                    initialType={modalType}
-                    closeModal={closeModal}
-                />
-            </Modal>
+            <LogRegModal
+                initialType={modalType}
+                modalOpen={modalOpen}
+                closeModal={closeModal}
+            />
         </>
     );
 };
