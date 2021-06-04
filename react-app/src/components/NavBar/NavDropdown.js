@@ -98,7 +98,7 @@ const NavDropdown = () => {
                             </div>
                         );
                     })}
-                    {dropdownInput.length === 0 && Object.keys(user.boards_joined).map(board_id => {
+                    {dropdownInput.length === 0 && user && Object.keys(user.boards_joined).map(board_id => {
                         return (
                             <div
                                 key={board_id}

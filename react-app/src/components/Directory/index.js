@@ -51,7 +51,7 @@ const Directory = () => {
             await dispatch(authenticate());
             setBoards(prevState => {
                 const updateIndex = prevState.findIndex(findBoard => findBoard.id === board.id);
-                return [...prevState.slice(0, updateIndex), data, ...prevState.slice(updateIndex + 1, prevState.length)]
+                return [...prevState.slice(0, updateIndex), data, ...prevState.slice(updateIndex + 1, prevState.length)];
             });
         }
     }
@@ -65,7 +65,7 @@ const Directory = () => {
             await dispatch(authenticate());
             setBoards(prevState => {
                 const updateIndex = prevState.findIndex(findBoard => findBoard.id === board.id);
-                return [...prevState.slice(0, updateIndex), data, ...prevState.slice(updateIndex + 1, prevState.length)]
+                return [...prevState.slice(0, updateIndex), data, ...prevState.slice(updateIndex + 1, prevState.length)];
             });
         }
     }
@@ -100,7 +100,7 @@ const Directory = () => {
                 </div>
                 <div className="directory-board-list">
                     {boards.map(board => {
-                        const userIsMember = board.id in user.boards_joined;
+                        const userIsMember = user && board.id in user.boards_joined;
 
                         return (
                             <div className="directory-board-item" key={board.id}>
@@ -114,14 +114,16 @@ const Directory = () => {
                                 </div>
                                 <div className="directory-board-controls">
                                     <div className="directory-board-users">
-                                        {board.member_count} user{board.member_count > 1 ? "s" : ""}
+                                        {board.member_count} USER{board.member_count > 1 ? "S" : ""}
                                     </div>
+                                    {user &&
                                     <button
                                         className={`${userIsMember ? "btn-red" : "btn-primary"} directory-join-button`}
                                         onClick={() => userIsMember ? handleLeave(board) : handleJoin(board)}
                                     >
                                         {userIsMember ? "Leave" : "Join"}
                                     </button>
+                                    }
                                 </div>
                             </div>
                         );

@@ -63,6 +63,14 @@
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
+    min-width: 64px;
+}
+
+.directory-board-users {
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: #868789;
 }
 
 .directory-join-button {
