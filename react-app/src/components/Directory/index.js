@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import {useSelector} from "react-redux";
 import {useHistory, useLocation} from "react-router-dom";
 import "./Directory.css";
 import PageController from "../common/PageController";
@@ -8,6 +9,7 @@ function useQuery() {
 }
 
 const Directory = () => {
+    const user = useSelector(state => state.session.user);
     const query = useQuery();
     const [searchTerm, setSearchTerm] = useState(query.get("search"));
     const [pageNum, setPageNum] = useState(Number(query.get("page")) || 1);
@@ -66,6 +68,8 @@ const Directory = () => {
                 </div>
                 <div className="directory-board-list">
                     {boards.map(board => {
+                        const user_is_member = board.id in user.boards_joined;
+
                         return (
                             <div className="directory-board-item" key={board.id}>
                                 <div className="directory-board-about-info">
@@ -81,9 +85,9 @@ const Directory = () => {
                                         {board.member_count} user{board.member_count > 1 ? "s" : ""}
                                     </div>
                                     <button
-                                        className="btn-primary directory-join-button"
+                                        className={`${user_is_member ? "btn-red" : "btn-primary"} directory-join-button`}
                                     >
-                                        Join
+                                        {user_is_member ? "Leave" : "Join"}
                                     </button>
                                 </div>
                             </div>
