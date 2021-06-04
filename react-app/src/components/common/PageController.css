@@ -1,14 +1,54 @@
 .page-controller {
     display: flex;
     flex-flow: row nowrap;
+    align-items: center;
 }
 
 .page-selector {
     margin: 0 4px;
+    padding: 2px;
+    background-color: #272729;
+    border: 1px solid #343536;
+    border-radius: 4px;
+    position: relative;
+    height: 14px;
+    color: #d5d8da;
+    cursor: pointer;
 }
 
 .page-link {
     text-decoration: underline;
     margin: 0 4px;
     cursor: pointer;
+}
+
+.page-chevron {
+    margin-left: 4px;
+}
+
+.page-dropdown {
+    position: absolute;
+    z-index: 2;
+    top: 17px;
+    left: -1px;
+    width: calc(100% + 18px);
+    background-color: #272729;
+    border: 1px solid #343536;
+    max-height: 140px;
+    overflow-y: scroll;
+    cursor: default;
+}
+
+.page-dropdown-item {
+    padding: 2px 4px;
+    opacity: 0.7;
+    transition: opacity 0.25s ease, font-weight 0.25s ease, background-color 0.25s ease;
+    color: #d5d8da;
+    cursor: pointer;
+}
+
+.page-dropdown-item:hover {
+    opacity: 1.0;
+    font-weight: bold;
+    background-color: #222224;
 }
