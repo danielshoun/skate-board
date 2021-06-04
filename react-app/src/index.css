@@ -12,6 +12,7 @@ body {
 
 .content-wrapper {
     padding-top: 80px;
+    z-index: 1;
 }
 
 .btn-primary,

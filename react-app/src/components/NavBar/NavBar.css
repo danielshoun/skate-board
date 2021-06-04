@@ -5,6 +5,7 @@
     height: 40px;
     width: 100%;
     position: fixed;
+    z-index: 2;
     top: 0;
     padding: 4px 0;
     background-color: #1a1a1b;
