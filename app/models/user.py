@@ -36,5 +36,6 @@ class User(db.Model, UserMixin):
             "email": self.email,
             "reg_date": self.reg_date.isoformat(),
             "avatar_url": self.avatar_url,
-            "title": self.title
+            "title": self.title,
+            "boards_joined": {board.id: board.to_dict() for board in self.boards_joined}
         }
