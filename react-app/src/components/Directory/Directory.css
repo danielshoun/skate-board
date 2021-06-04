@@ -27,5 +27,48 @@
     border: 1px solid #d5d8da;
 }
 
-.directory-search-btn {
+.directory-content-container {
+    margin-top: 16px;
+}
+
+.directory-content-header {
+    font-size: 12px;
+    font-weight: bold;
+    color: #868789;
+    margin-bottom: 4px;
+}
+
+.directory-board-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 68px;
+    border-top: 1px solid #343536;
+    padding: 16px 0;
+}
+
+.directory-board-about-info {
+    margin-right: 32px;
+}
+
+.directory-board-name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.directory-board-controls {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.directory-join-button {
+    margin-top: 8px;
+    min-width: 52px;
+}
+
+.directory-content-footer {
+    padding-top: 4px;
+    border-top: 1px solid #343536;
 }

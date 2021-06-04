@@ -20,5 +20,6 @@ class Board(db.Model):
             "owner_id": self.owner_id,
             "name": self.name,
             "description": self.description,
-            "private": self.private
+            "private": self.private,
+            "member_count": len(self.members)
         }
