@@ -27,8 +27,8 @@ const NavBar = () => {
     const user = useSelector(state => state.session.user);
     const dispatch = useDispatch();
     const history = useHistory();
-    const [activeCommunity, setActiveCommunity] = useState("");
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [dropdownBoards, setDropdownBoards] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
     const [modalType, setModalType] = useState();
     const [userMenuOpen, setUserMenuOpen] = useState(false);
@@ -40,6 +40,43 @@ const NavBar = () => {
             setModalOpen(true);
         }
     }, [modalType]);
+
+    useEffect(() => {
+        function handleOutsideClick(e) {
+            if (e.target.className !== "dropdown-menu-item") {
+                setDropdownOpen(false);
+            }
+        }
+
+        if (dropdownOpen === true) {
+            if (user) {
+                (async () => {
+                    const res = await fetch("/api/boards/joined");
+                    if (res.ok) {
+                        const data = await res.json();
+                        setDropdownBoards(data);
+                    }
+                })();
+            }
+            document.addEventListener("click", handleOutsideClick);
+        }
+        return () => {
+            document.removeEventListener("click", handleOutsideClick);
+        };
+    }, [dropdownOpen]);
+
+    function handleMenuItemClick(e, id) {
+        e.stopPropagation();
+        console.log(id);
+        if (id === "directory") {
+            history.push("/directory");
+        } else if (id === "create") {
+            history.push("/board/new");
+        } else {
+            history.push(`/board/${id}`)
+        }
+        setDropdownOpen(false);
+    }
 
     function openModal(type) {
         setModalType(type);
@@ -83,10 +120,37 @@ const NavBar = () => {
                         onClick={() => setDropdownOpen(prevState => !prevState)}
                     >
                         <span
-                            className={`dropdown-active-text${activeCommunity === "" && " no-active"}`}>
-                            {activeCommunity === "" ? "Go to board..." : activeCommunity}
+                            className={"dropdown-active-text"}>
+                            Go to board...
                         </span>
                         <i className={`fas fa-chevron-down dropdown-chevron${dropdownOpen ? " active-chevron" : ""}`}/>
+                        {dropdownOpen &&
+                        <div className="dropdown-menu">
+                            {dropdownBoards.map(board => {
+                                return (
+                                    <div
+                                        key={board.id}
+                                        className="dropdown-menu-item"
+                                        onClick={(e) => handleMenuItemClick(e, board.id)}
+                                    >
+                                        {board.name}
+                                    </div>
+                                );
+                            })}
+                            <div
+                                className="dropdown-menu-item"
+                                onClick={(e) => handleMenuItemClick(e, "directory")}
+                            >
+                                Directory
+                            </div>
+                            <div
+                                className="dropdown-menu-item"
+                                onClick={(e) => handleMenuItemClick(e, "create")}
+                            >
+                                Create New Board
+                            </div>
+                        </div>
+                        }
                     </div>
                 </div>
                 <div className="nav-user-area"
@@ -103,7 +167,7 @@ const NavBar = () => {
                                 LOG IN
                             </button>
                             <button
-                                className="btn-primary btn-nav-login"
+                                className="btn-secondary btn-nav-login"
                                 onClick={() => openModal("register")}
                             >
                                 REGISTER

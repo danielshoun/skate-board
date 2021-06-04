@@ -71,9 +71,9 @@ const LogRegModal = ({initialType, closeModal}) => {
                         onChange={(e) => setEmail(e.target.value)}
                     />
                     <div className="log-reg-error-div">
-                        {errors.email && errors.email.map(error => {
+                        {errors.email && errors.email.map((error, i) => {
                             return (
-                                <div>{error}</div>
+                                <div key={i}>{error}</div>
                             );
                         })}
                     </div>
@@ -94,9 +94,9 @@ const LogRegModal = ({initialType, closeModal}) => {
                         onChange={(e) => setUsername(e.target.value)}
                     />
                     <div className="log-reg-error-div">
-                        {errors.username && errors.username.map(error => {
+                        {errors.username && errors.username.map((error, i) => {
                             return (
-                                <div>{error}</div>
+                                <div key={i}>{error}</div>
                             );
                         })}
                     </div>
@@ -117,9 +117,9 @@ const LogRegModal = ({initialType, closeModal}) => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                     <div className="log-reg-error-div">
-                        {errors.password && errors.password.map(error => {
+                        {errors.password && errors.password.map((error, i) => {
                             return (
-                                <div>{error}</div>
+                                <div key={i}>{error}</div>
                             );
                         })}
                     </div>
@@ -140,9 +140,9 @@ const LogRegModal = ({initialType, closeModal}) => {
                         onChange={(e) => setConfirmPassword(e.target.value)}
                     />
                     <div className="log-reg-error-div">
-                        {errors.confirmPassword && errors.confirmPassword.map(error => {
+                        {errors.confirmPassword && errors.confirmPassword.map((error, i) => {
                             return (
-                                <div>{error}</div>
+                                <div key={i}>{error}</div>
                             );
                         })}
                     </div>
@@ -156,13 +156,13 @@ const LogRegModal = ({initialType, closeModal}) => {
                         {type === "login" ? "LOG IN" : "REGISTER"}
                     </button>
                     <button
-                        className="btn-primary log-reg-btn"
+                        className="btn-secondary log-reg-btn"
                         onClick={handleDemo}
                     >
                         DEMO
                     </button>
                     <button
-                        className="btn-primary log-reg-btn"
+                        className="btn-red log-reg-btn"
                         onClick={closeModal}
                     >
                         CANCEL

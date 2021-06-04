@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import {useDispatch} from "react-redux";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import NavBar from "./components/NavBar";
+import NewBoard from "./components/NewBoard";
 import {authenticate} from "./store/session";
 
 function App() {
@@ -24,6 +25,12 @@ function App() {
             <NavBar/>
             <div className="content-wrapper">
                 <Switch>
+                    <Route path="/directory" exact={true}>
+
+                    </Route>
+                    <Route path="/board/new" exact={true}>
+                        <NewBoard/>
+                    </Route>
                     <Route path="/" exact={true}>
                         <h1>My Home Page</h1>
                     </Route>

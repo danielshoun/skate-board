@@ -14,9 +14,10 @@ body {
     padding-top: 80px;
 }
 
-.btn-primary {
+.btn-primary,
+.btn-secondary,
+.btn-red {
     color: #d5d8da;
-    background-color: #0079d3;
     opacity: 0.8;
     border: none;
     border-radius: 4px;
@@ -28,6 +29,20 @@ body {
     cursor: pointer;
 }
 
-.btn-primary:hover {
+.btn-primary {
+    background-color: #47a025;
+}
+
+.btn-secondary {
+    background-color: #0079d3;
+}
+
+.btn-red {
+    background-color: #bf1e2d;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-red:hover {
     opacity: 1.0;
 }

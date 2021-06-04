@@ -11,6 +11,10 @@ def board_exists(_form, field):
 
 
 class BoardForm(FlaskForm):
-    name = StringField("name", validators=[DataRequired(), Length(1, 32, "Board name is too long."), board_exists])
-    description = StringField("description", validators=[Length(0, 256)])
+    name = StringField(
+        "name", validators=[DataRequired(), Length(1, 32, "Board name is too long. (Max 32 characters)"), board_exists]
+        )
+    description = StringField(
+        "description", validators=[Length(0, 256, "Board description is too long.  (Max 256 characters)")]
+        )
     private = BooleanField("private")

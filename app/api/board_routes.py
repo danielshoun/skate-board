@@ -54,7 +54,7 @@ def create_board():
         db.session.add(board)
         db.session.commit()
         return board.to_dict()
-    return {"errors": validation_errors_to_error_messages(form.errors)}, 404
+    return {"errors": validation_errors_to_error_messages(form.errors)}
 
 
 @board_routes.route("/<int:board_id>", methods=["PUT"])
