@@ -1,0 +1,29 @@
+.directory-container {
+    margin: 0 auto;
+    max-width: 700px;
+}
+
+.directory-search-container {
+    display: flex;
+    align-items: center;
+}
+
+.directory-search-bar {
+    padding: 4px 8px;
+    background-color: transparent;
+    border: 1px solid #343536;
+    border-radius: 4px;
+    color: #d5d8da;
+    transition: border 0.15s ease;
+    font-family: "Roboto", sans-serif;
+}
+
+.directory-search-bar:focus {
+    outline: none;
+    border: 1px solid #d5d8da;
+}
+
+.directory-search-btn {
+    position: relative;
+    z-index: -1;
+}

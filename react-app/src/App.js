@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {useDispatch} from "react-redux";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
+import Directory from "./components/Directory";
 import NavBar from "./components/NavBar";
 import NewBoard from "./components/NewBoard";
 import {authenticate} from "./store/session";
@@ -26,7 +27,7 @@ function App() {
             <div className="content-wrapper">
                 <Switch>
                     <Route path="/directory" exact={true}>
-
+                        <Directory/>
                     </Route>
                     <Route path="/board/new" exact={true}>
                         <NewBoard/>
