@@ -32,6 +32,8 @@
 }
 
 .directory-content-header {
+    display: flex;
+    justify-content: space-between;
     font-size: 12px;
     font-weight: bold;
     color: #868789;

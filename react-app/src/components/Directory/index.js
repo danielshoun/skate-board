@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {useHistory, useLocation} from "react-router-dom";
 import "./Directory.css";
+import PageController from "../common/PageController";
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -9,7 +10,7 @@ function useQuery() {
 const Directory = () => {
     const query = useQuery();
     const [searchTerm, setSearchTerm] = useState(query.get("search"));
-    const [pageNum, setPageNum] = useState(query.get("page"));
+    const [pageNum, setPageNum] = useState(Number(query.get("page")) || 1);
     const [pageCount, setPageCount] = useState(1);
     const history = useHistory();
     const [searchInput, setSearchInput] = useState("");
@@ -31,12 +32,12 @@ const Directory = () => {
     }, [searchTerm, pageNum]);
 
     function handleSearchEnter(e) {
-        if (e.key === "Enter") {
+        if (e.key === "Enter" || e.target.tagName === "BUTTON") {
             history.push(`/directory?search=${searchInput}`);
             setSearchTerm(searchInput);
         }
     }
-    
+
     return (
         <div className="directory-container">
             <div className="directory-search-container">
@@ -48,14 +49,20 @@ const Directory = () => {
                     onChange={(e) => setSearchInput(e.target.value)}
                     onKeyDown={handleSearchEnter}
                 />
-                <button className="btn-secondary directory-search-btn">Search</button>
+                <button
+                    className="btn-secondary directory-search-btn"
+                    onClick={handleSearchEnter}
+                >
+                    Search
+                </button>
             </div>
             <div className="directory-content-container">
                 <div className="directory-content-header">
-                    <span>
+                    <div className="directory-header-info">
                         {query.get("search") ? `SEARCH FOR: ${query.get("search").toUpperCase()}` : "PUBLIC BOARDS"} -
-                        PAGE {query.get("page") || 1}
-                    </span>
+                        PAGE {pageNum || 1}
+                    </div>
+                    <PageController pageCount={pageCount} pageNum={pageNum} pageSetter={setPageNum}/>
                 </div>
                 <div className="directory-board-list">
                     {boards.map(board => {
@@ -73,15 +80,22 @@ const Directory = () => {
                                     <div className="directory-board-users">
                                         {board.member_count} user{board.member_count > 1 ? "s" : ""}
                                     </div>
-                                    <button className="btn-primary directory-join-button">Join</button>
+                                    <button
+                                        className="btn-primary directory-join-button"
+                                    >
+                                        Join
+                                    </button>
                                 </div>
                             </div>
                         );
                     })}
                 </div>
                 <div className="directory-content-header directory-content-footer">
-                    {query.get("search") ? `SEARCH FOR: ${query.get("search").toUpperCase()}` : "PUBLIC BOARDS"} -
-                    PAGE {query.get("page") || 1}
+                    <div className="directory-header-info">
+                        {query.get("search") ? `SEARCH FOR: ${query.get("search").toUpperCase()}` : "PUBLIC BOARDS"} -
+                        PAGE {pageNum || 1}
+                    </div>
+                    <PageController pageCount={pageCount} pageNum={pageNum} pageSetter={setPageNum}/>
                 </div>
             </div>
         </div>
