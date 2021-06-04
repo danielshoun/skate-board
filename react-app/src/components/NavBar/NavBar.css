@@ -79,15 +79,15 @@
     align-items: center;
     padding: 0 24px;
     height: 36px;
-    /*border-bottom: 1px solid #343536;*/
     color: #d5d8da;
     opacity: 0.7;
-    transition: opacity 0.25s ease, font-weight 0.25s ease;
+    transition: opacity 0.25s ease, font-weight 0.25s ease, background-color 0.25s ease;
 }
 
 .dropdown-menu-item:hover {
     opacity: 1.0;
     font-weight: bold;
+    background-color: #222224;
 }
 
 .nav-user-area {
