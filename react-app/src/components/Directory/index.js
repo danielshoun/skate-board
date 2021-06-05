@@ -30,7 +30,7 @@ const Directory = () => {
             if (res.ok) {
                 const data = await res.json();
                 setBoards(data.boards);
-                setPageCount(data.page_count);
+                setPageCount(data.page_count || 1);
             }
         })();
     }, [searchTerm, pageNum]);
@@ -99,6 +99,11 @@ const Directory = () => {
                     <PageController pageCount={pageCount} pageNum={pageNum} pageSetter={setPageNum}/>
                 </div>
                 <div className="directory-board-list">
+                    {boards.length === 0 &&
+                    <div className="no-results-info">
+                        Your search for "{searchTerm}" did not yield any results.
+                    </div>
+                    }
                     {boards.map(board => {
                         const userIsMember = user && board.id in user.boards_joined;
 
@@ -129,6 +134,7 @@ const Directory = () => {
                         );
                     })}
                 </div>
+                {boards.length > 0 &&
                 <div className="directory-content-header directory-content-footer">
                     <div className="directory-header-info">
                         {query.get("search") ? `SEARCH FOR: ${query.get("search").toUpperCase()}` : "PUBLIC BOARDS"} -
@@ -136,6 +142,7 @@ const Directory = () => {
                     </div>
                     <PageController pageCount={pageCount} pageNum={pageNum} pageSetter={setPageNum}/>
                 </div>
+                }
             </div>
         </div>
     );
