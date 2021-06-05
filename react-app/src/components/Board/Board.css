@@ -38,3 +38,7 @@
     font-weight: bold;
     color: #868789;
 }
+
+.board-edit-btn {
+    min-width: 52px;
+}

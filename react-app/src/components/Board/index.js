@@ -44,6 +44,9 @@ const Board = () => {
                         board={board}
                         setBoard={setBoard}
                     />
+                    {board.owner_id === user.id &&
+                    <button className="btn-secondary board-edit-btn">EDIT</button>
+                    }
                 </div>
             </div>
         </div>

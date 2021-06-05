@@ -48,7 +48,7 @@ const JoinLeaveButton = ({userIsMember, board, setBoard, setBoards}) => {
             className={`${userIsMember ? "btn-red" : "btn-primary"} join-button`}
             onClick={(e) => userIsMember ? handleLeave(e) : handleJoin(e)}
         >
-            {userIsMember ? "Leave" : "Join"}
+            {userIsMember ? "LEAVE" : "JOIN"}
         </button>
     );
 };
