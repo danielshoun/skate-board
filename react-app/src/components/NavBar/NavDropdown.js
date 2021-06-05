@@ -35,9 +35,8 @@ const NavDropdown = () => {
                             .filter(
                                 board_id => user.boards_joined[board_id].name.toLowerCase().includes(dropdownInput.toLowerCase())
                             )
-                            .map(board_id => user.boards_joined[board_id])
-                            .sort((board1, board2) => {
-                                return board1.name.toLowerCase()[0] > board2.name.toLowerCase()[0]
+                            .sort((id1, id2) => {
+                                return user.boards_joined[id1].name.toLowerCase()[0] > user.boards_joined[id2].name.toLowerCase()[0]
                             })
                     );
                 } else {
@@ -91,14 +90,14 @@ const NavDropdown = () => {
                     {user &&
                     <div className="dropdown-header">YOUR BOARDS</div>
                     }
-                    {filteredBoards.length > 0 && filteredBoards.map(board => {
+                    {filteredBoards.length > 0 && filteredBoards.map(board_id => {
                         return (
                             <div
-                                key={board.id}
+                                key={board_id}
                                 className="dropdown-menu-item"
-                                onClick={(e) => handleMenuItemClick(e, board.id)}
+                                onClick={(e) => handleMenuItemClick(e, board_id)}
                             >
-                                {board.name}
+                                {user.boards_joined[board_id].name}
                             </div>
                         );
                     })}
