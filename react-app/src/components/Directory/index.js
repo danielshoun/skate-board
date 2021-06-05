@@ -42,7 +42,8 @@ const Directory = () => {
         }
     }
 
-    async function handleJoin(board) {
+    async function handleJoin(e, board) {
+        e.stopPropagation();
         const res = await fetch(`/api/boards/${board.id}/join`, {
             method: "POST"
         });
@@ -56,7 +57,8 @@ const Directory = () => {
         }
     }
 
-    async function handleLeave(board) {
+    async function handleLeave(e, board) {
+        e.stopPropagation();
         const res = await fetch(`/api/boards/${board.id}/leave`, {
             method: "POST"
         });
@@ -96,10 +98,16 @@ const Directory = () => {
                         {query.get("search") ? `SEARCH FOR: ${query.get("search").toUpperCase()}` : "PUBLIC BOARDS"} -
                         PAGE {pageNum || 1}
                     </div>
-                    <PageController pageCount={pageCount} pageNum={pageNum} pageSetter={setPageNum}/>
+                    {boards.length > 0 &&
+                    <PageController
+                        pageCount={pageCount}
+                        pageNum={pageNum}
+                        pageSetter={setPageNum}
+                    />
+                    }
                 </div>
                 <div className="directory-board-list">
-                    {boards.length === 0 &&
+                    {boards.length === 0 && searchTerm &&
                     <div className="no-results-info">
                         Your search for "{searchTerm}" did not yield any results.
                     </div>
@@ -108,7 +116,10 @@ const Directory = () => {
                         const userIsMember = user && board.id in user.boards_joined;
 
                         return (
-                            <div className="directory-board-item" key={board.id}>
+                            <div className="directory-board-item"
+                                 key={board.id}
+                                 onClick={() => history.push(`/board/${board.id}`)}
+                            >
                                 <div className="directory-board-about-info">
                                     <div className="directory-board-name">
                                         {board.name}
@@ -124,7 +135,7 @@ const Directory = () => {
                                     {user &&
                                     <button
                                         className={`${userIsMember ? "btn-red" : "btn-primary"} directory-join-button`}
-                                        onClick={() => userIsMember ? handleLeave(board) : handleJoin(board)}
+                                        onClick={(e) => userIsMember ? handleLeave(e, board) : handleJoin(e, board)}
                                     >
                                         {userIsMember ? "Leave" : "Join"}
                                     </button>

@@ -48,6 +48,12 @@
     min-height: 68px;
     border-top: 1px solid #343536;
     padding: 16px 0;
+    transition: background-color 0.25s ease;
+    cursor: pointer;
+}
+
+.directory-board-item:hover {
+    background-color: #222224;
 }
 
 .directory-board-about-info {
