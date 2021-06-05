@@ -1,0 +1,40 @@
+.board-container {
+    margin: 0 auto;
+    padding: 32px;
+    max-width: 700px;
+    background-color: #1a1a1b;
+    border: 1px solid #343536;
+    border-radius: 8px;
+}
+
+.board-info-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 68px;
+    padding: 16px 0;
+}
+
+.board-about-info {
+    margin-right: 32px;
+}
+
+.board-info-name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.board-controls {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    min-width: 64px;
+}
+
+.board-users {
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: #868789;
+}

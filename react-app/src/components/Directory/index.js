@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {useHistory, useLocation} from "react-router-dom";
 import "./Directory.css";
-import {authenticate} from "../../store/session";
+import JoinLeaveButton from "../common/JoinLeaveButton";
 import PageController from "../common/PageController";
 
 function useQuery() {
@@ -11,7 +11,6 @@ function useQuery() {
 
 const Directory = () => {
     const user = useSelector(state => state.session.user);
-    const dispatch = useDispatch();
     const query = useQuery();
     const [searchTerm, setSearchTerm] = useState(query.get("search"));
     const [pageNum, setPageNum] = useState(Number(query.get("page")) || 1);
@@ -41,38 +40,6 @@ const Directory = () => {
             setSearchTerm(searchInput);
         }
     }
-
-    async function handleJoin(e, board) {
-        e.stopPropagation();
-        const res = await fetch(`/api/boards/${board.id}/join`, {
-            method: "POST"
-        });
-        if (res.ok) {
-            const data = await res.json();
-            await dispatch(authenticate());
-            setBoards(prevState => {
-                const updateIndex = prevState.findIndex(findBoard => findBoard.id === board.id);
-                return [...prevState.slice(0, updateIndex), data, ...prevState.slice(updateIndex + 1, prevState.length)];
-            });
-        }
-    }
-
-    async function handleLeave(e, board) {
-        e.stopPropagation();
-        const res = await fetch(`/api/boards/${board.id}/leave`, {
-            method: "POST"
-        });
-        if (res.ok) {
-            const data = await res.json();
-            await dispatch(authenticate());
-            setBoards(prevState => {
-                const updateIndex = prevState.findIndex(findBoard => findBoard.id === board.id);
-                return [...prevState.slice(0, updateIndex), data, ...prevState.slice(updateIndex + 1, prevState.length)];
-            });
-        }
-    }
-
-    console.log(boards);
 
     return (
         <div className="directory-container">
@@ -133,12 +100,11 @@ const Directory = () => {
                                         {board.member_count} USER{board.member_count > 1 ? "S" : ""}
                                     </div>
                                     {user &&
-                                    <button
-                                        className={`${userIsMember ? "btn-red" : "btn-primary"} directory-join-button`}
-                                        onClick={(e) => userIsMember ? handleLeave(e, board) : handleJoin(e, board)}
-                                    >
-                                        {userIsMember ? "Leave" : "Join"}
-                                    </button>
+                                    <JoinLeaveButton
+                                        userIsMember={userIsMember}
+                                        board={board}
+                                        setBoards={setBoards}
+                                    />
                                     }
                                 </div>
                             </div>
