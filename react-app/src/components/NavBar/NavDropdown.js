@@ -34,7 +34,11 @@ const NavDropdown = () => {
                         Object.keys(user.boards_joined)
                             .filter(
                                 board_id => user.boards_joined[board_id].name.toLowerCase().includes(dropdownInput.toLowerCase())
-                            ).map(board_id => user.boards_joined[board_id])
+                            )
+                            .map(board_id => user.boards_joined[board_id])
+                            .sort((board1, board2) => {
+                                return board1.name.toLowerCase()[0] > board2.name.toLowerCase()[0]
+                            })
                     );
                 } else {
                     setFilteredBoards([]);
@@ -98,7 +102,11 @@ const NavDropdown = () => {
                             </div>
                         );
                     })}
-                    {dropdownInput.length === 0 && user && Object.keys(user.boards_joined).map(board_id => {
+                    {dropdownInput.length === 0 && user && Object.keys(user.boards_joined)
+                        .sort((id1, id2) => {
+                        return user.boards_joined[id1].name.toLowerCase()[0] > user.boards_joined[id2].name.toLowerCase()[0]
+                    })
+                        .map(board_id => {
                         return (
                             <div
                                 key={board_id}
