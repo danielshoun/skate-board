@@ -39,11 +39,13 @@ const Board = () => {
                     <div className="board-users">
                         {board.member_count} USER{board.member_count > 1 ? "S" : ""}
                     </div>
+                    {user &&
                     <JoinLeaveButton
                         userIsMember={userIsMember}
                         board={board}
                         setBoard={setBoard}
                     />
+                    }
                     {board.owner_id === user.id &&
                     <button className="btn-secondary board-edit-btn">EDIT</button>
                     }
