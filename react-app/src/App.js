@@ -33,6 +33,9 @@ function App() {
                     <Route path="/board/new" exact={true}>
                         <NewBoard/>
                     </Route>
+                    <Route path="/board/:boardId/new">
+                        <h1>New Thread</h1>
+                    </Route>
                     <Route path="/board/:boardId">
                         <Board/>
                     </Route>

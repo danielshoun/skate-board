@@ -43,10 +43,13 @@
     min-width: 52px;
 }
 
-.board-search-container {
+.board-control-container {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 16px;
     margin-bottom: 16px;
+    border-top: 1px solid #343536;
 }
-
 
 .thread-item-page-links {
     margin-top: 4px;

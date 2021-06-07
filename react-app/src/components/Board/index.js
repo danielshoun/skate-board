@@ -17,7 +17,7 @@ const Board = () => {
     const [pageNum, setPageNum] = useState(Number(query.get("page")) || 1);
     const [pageCount, setPageCount] = useState(1);
     const [searchInput, setSearchInput] = useState("");
-    const [searchTerm, setSearchTerm] = useState(query.get("search"))
+    const [searchTerm, setSearchTerm] = useState(query.get("search"));
     const [userIsMember, setUserIsMember] = useState(false);
 
     useEffect(() => {
@@ -89,20 +89,28 @@ const Board = () => {
                 </div>
             </div>
             <div className="board-content-container">
-                <div className="board-search-container">
-                    <input
-                        className="directory-search-bar"
-                        type="text"
-                        placeholder="Search Threads..."
-                        value={searchInput}
-                        onChange={(e) => setSearchInput(e.target.value)}
-                        onKeyDown={handleSearchEnter}
-                    />
+                <div className="board-control-container">
+                    <div className="board-search-container">
+                        <input
+                            className="directory-search-bar"
+                            type="text"
+                            placeholder="Search Threads..."
+                            value={searchInput}
+                            onChange={(e) => setSearchInput(e.target.value)}
+                            onKeyDown={handleSearchEnter}
+                        />
+                        <button
+                            className="btn-secondary directory-search-btn"
+                            onClick={handleSearchEnter}
+                        >
+                            Search
+                        </button>
+                    </div>
                     <button
-                        className="btn-secondary directory-search-btn"
-                        onClick={handleSearchEnter}
+                        className="btn-primary new-thread-btn"
+                        onClick={() => history.push(`/board/${boardId}/new`)}
                     >
-                        Search
+                        NEW THREAD
                     </button>
                 </div>
                 <div className="directory-content-header">
