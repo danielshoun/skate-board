@@ -51,7 +51,7 @@ def get_board(board_id):
         .join("posts") \
         .group_by(Thread) \
         .filter(Thread.board_id == board_id) \
-        .order_by(desc("last_post")) \
+        .order_by(desc(Thread.pinned), desc("last_post")) \
         .paginate(page=request.args.get("page", default=1, type=int), max_per_page=50)
     result_threads = []
     for thread in threads.items:
