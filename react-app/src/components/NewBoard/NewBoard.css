@@ -57,36 +57,6 @@
     flex-flow: row nowrap;
 }
 
-.radio-button {
-    display: flex;
-    flex-flow: row nowrap;
-    margin-right: 24px;
-}
-
-.radio {
-    width: 16px;
-    height: 16px;
-    margin-right: 8px;
-    border: 1px solid #868789;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.radio-inner {
-    width: 0;
-    height: 0;
-    transition: width 0.1s linear, height 0.1s linear;
-}
-
-.radio-inner.active-radio {
-    background-color: #d5d8da;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-}
-
 .new-board-btn-container {
     width: 100%;
     display: flex;

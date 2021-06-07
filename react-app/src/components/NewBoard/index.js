@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {useHistory} from "react-router-dom";
 import "./NewBoard.css";
+import CustomRadioButton from "../common/CustomRadioButton";
 
 const NewBoard = () => {
     const history = useHistory();
@@ -91,24 +92,18 @@ const NewBoard = () => {
                         MAKE PRIVATE?
                     </label>
                     <div className="radio-button-container">
-                        <div className="radio-button">
-                            <div
-                                className="radio"
-                                onClick={() => setMakePrivate(true)}
-                            >
-                                <div className={`radio-inner${makePrivate ? " active-radio" : ""}`}/>
-                            </div>
-                            Yes
-                        </div>
-                        <div className="radio-button">
-                            <div
-                                className="radio"
-                                onClick={() => setMakePrivate(false)}
-                            >
-                                <div className={`radio-inner${!makePrivate ? " active-radio" : ""}`}/>
-                            </div>
-                            No
-                        </div>
+                        <CustomRadioButton
+                            setter={setMakePrivate}
+                            currentValue={makePrivate}
+                            targetValue={true}
+                            text={"Yes"}
+                        />
+                        <CustomRadioButton
+                            setter={setMakePrivate}
+                            currentValue={makePrivate}
+                            targetValue={false}
+                            text={"No"}
+                        />
                     </div>
                 </div>
                 <div className="new-board-btn-container">
