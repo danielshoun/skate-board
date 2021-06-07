@@ -1,0 +1,17 @@
+.bb-code-bar {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+.bb-code-icon {
+    width: 16px;
+    height: 16px;
+    font-size: 100%;
+    padding: 4px;
+    margin: 4px;
+    border: 1px solid #343536;
+    border-radius: 4px;
+    text-align: center;
+    background-color: #272729;
+}

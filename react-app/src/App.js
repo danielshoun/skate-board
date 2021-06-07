@@ -5,6 +5,7 @@ import Board from "./components/Board";
 import Directory from "./components/Directory";
 import NavBar from "./components/NavBar";
 import NewBoard from "./components/NewBoard";
+import NewThread from "./components/NewThread";
 import {authenticate} from "./store/session";
 
 function App() {
@@ -34,7 +35,7 @@ function App() {
                         <NewBoard/>
                     </Route>
                     <Route path="/board/:boardId/new">
-                        <h1>New Thread</h1>
+                        <NewThread/>
                     </Route>
                     <Route path="/board/:boardId">
                         <Board/>

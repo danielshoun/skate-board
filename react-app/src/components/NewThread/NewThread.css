@@ -1,0 +1,60 @@
+.new-thread-container {
+    margin: 0 auto;
+    max-width: 500px;
+}
+
+.new-thread-form {
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    padding: 32px;
+    background-color: #1a1a1b;
+    border: 1px solid #343536;
+    border-radius: 8px;
+}
+
+.new-thread-form-field {
+    display: flex;
+    flex-flow: column nowrap;
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+.new-thread-form-label {
+    margin-bottom: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #868789;
+}
+
+.new-thread-form-input {
+    padding: 4px 8px;
+    background-color: #272729;
+    border: 1px solid #343536;
+    border-radius: 4px;
+    color: #868789;
+    transition: border 0.15s ease;
+    font-size: 18px;
+    font-family: "Roboto", sans-serif;
+}
+
+.new-thread-form-input:focus {
+    outline: none;
+    border: 1px solid #868789;
+}
+
+.new-thread-error-div {
+    height: 14px;
+    margin-top: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #bf1e2d;
+}
+
+.thread-radio-fields {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: left;
+    width: 100%;
+}

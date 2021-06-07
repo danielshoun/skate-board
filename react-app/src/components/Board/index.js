@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
-import {useParams, Link, useHistory} from "react-router-dom";
+import {useParams, useHistory} from "react-router-dom";
 import "./Board.css";
 import useQuery from "../../utils/useQuery";
 import JoinLeaveButton from "../common/JoinLeaveButton";
