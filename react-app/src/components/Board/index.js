@@ -5,6 +5,7 @@ import "./Board.css";
 import useQuery from "../../utils/useQuery";
 import JoinLeaveButton from "../common/JoinLeaveButton";
 import PageController from "../common/PageController";
+import ThreadPageLinks from "./ThreadPageLinks";
 
 const Board = () => {
     const query = useQuery();
@@ -81,8 +82,6 @@ const Board = () => {
                     </div>
                     }
                     {threads.map(thread => {
-                        const threadPageCount = Math.ceil(thread.post_count / 40);
-                        // const threadPageCount = 20;
                         return (
                             <div
                                 key={thread.id}
@@ -92,51 +91,7 @@ const Board = () => {
                                     <div className="thread-item-title">
                                         {thread.title}
                                     </div>
-                                    <div className="thread-item-page-links">
-                                        Pages:{
-                                        threadPageCount < 10 ?
-                                            Array.from({length: pageCount}, (x, i) => i + 1)
-                                                .map(num => {
-                                                    return (
-                                                        <Link
-                                                            className="thread-page-link"
-                                                            to={`/thread?page=${num}`}
-                                                        >
-                                                            {num}
-                                                        </Link>
-                                                    );
-                                                }) :
-                                            <>
-                                                {
-                                                    Array.from({length: 3}, (x, i) => i + 1)
-                                                        .map(num => {
-                                                            return (
-                                                                <Link
-                                                                    className="thread-page-link"
-                                                                    to={`/thread?page=${num}`}
-                                                                >
-                                                                    {num}
-                                                                </Link>
-                                                            );
-                                                        })
-                                                }
-                                                <span className="page-link-separator">...</span>
-                                                {
-                                                    Array.from({length: 3}, (x, i) => i + (threadPageCount - 2))
-                                                        .map(num => {
-                                                            return (
-                                                                <Link
-                                                                    className="thread-page-link"
-                                                                    to={`/thread?page=${num}`}
-                                                                >
-                                                                    {num}
-                                                                </Link>
-                                                            );
-                                                        })
-                                                }
-                                            </>
-                                    }
-                                    </div>
+                                    <ThreadPageLinks thread={thread}/>
                                 </div>
                             </div>
                         );
