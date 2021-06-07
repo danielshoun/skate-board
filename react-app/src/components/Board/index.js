@@ -80,6 +80,16 @@ const Board = () => {
                             This board doesn't have any threads yet. Get the conversation started!
                         </div>
                         }
+                        {threads.map(thread => {
+                            return (
+                                <div
+                                    key={thread.id}
+                                    className="board-thread-item"
+                                >
+                                    {thread.title}
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
             </div>

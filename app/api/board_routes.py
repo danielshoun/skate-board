@@ -19,7 +19,7 @@ def get_public_boards():
         .group_by(Board) \
         .filter(*queries) \
         .order_by(desc("member_count")) \
-        .paginate(page=request.args.get("page", default=1, type=int), max_per_page=10)
+        .paginate(page=request.args.get("page", default=1, type=int), per_page=10)
     result = {"boards": [board.Board.to_dict() for board in boards.items], "page_count": boards.pages}
     return jsonify(result)
 
@@ -52,7 +52,7 @@ def get_board(board_id):
         .group_by(Thread) \
         .filter(Thread.board_id == board_id) \
         .order_by(desc(Thread.pinned), desc("last_post")) \
-        .paginate(page=request.args.get("page", default=1, type=int), max_per_page=50)
+        .paginate(page=request.args.get("page", default=1, type=int), per_page=50)
     result_threads = []
     for thread in threads.items:
         print(thread)
