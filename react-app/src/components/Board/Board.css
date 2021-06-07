@@ -42,3 +42,18 @@
 .board-edit-btn {
     min-width: 52px;
 }
+
+
+.thread-item-page-links {
+    margin-top: 4px;
+    color: #636465;
+    font-size: 14px;
+    opacity: 0.5;
+}
+
+.thread-page-link {
+    text-decoration: none;
+    opacity: 1.0;
+    color: #868789;
+    margin: 0 4px;
+}
