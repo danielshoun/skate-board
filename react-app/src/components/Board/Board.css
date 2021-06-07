@@ -12,7 +12,7 @@
     justify-content: space-between;
     align-items: center;
     min-height: 68px;
-    padding: 16px 0;
+    padding: 0 0 16px 0;
 }
 
 .board-about-info {
@@ -51,9 +51,37 @@
     opacity: 0.5;
 }
 
+.board-thread-item {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-top: 1px solid #343536;
+}
+
+.pinned-thread-icon {
+    margin-right: 8px;
+}
+
 .thread-page-link {
     text-decoration: none;
     opacity: 1.0;
     color: #868789;
     margin: 0 4px;
+}
+
+.thread-item-sort {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.thread-author-info {
+    margin-right: 16px;
+    font-size: 14px;
+}
+
+.thread-date-info {
+    text-align: center;
+    font-size: 14px;
 }

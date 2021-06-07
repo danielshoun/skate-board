@@ -34,6 +34,21 @@ const Board = () => {
         setUserIsMember(user && board.id in user.boards_joined);
     }, [user, board]);
 
+    function getDateString(isoDate) {
+        const dateObj = new Date(isoDate + "Z");
+        let timeString;
+        let hours = dateObj.getHours();
+        let minutes = dateObj.getMinutes();
+        let ampm = hours >= 12 ? "PM" : "AM";
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        minutes = minutes < 10 ? `0${minutes}` : minutes;
+        timeString = `${dateObj.getMonth() + 1}/${
+            dateObj.getDate()
+        }/${dateObj.getFullYear()}, ${hours}:${minutes} ${ampm}`;
+        return timeString.split(", ");
+    }
+
     return (
         <div className="board-container">
             <div className="board-info-container">
@@ -82,6 +97,7 @@ const Board = () => {
                     </div>
                     }
                     {threads.map(thread => {
+                        const dateTimeStrings = getDateString(thread.last_post)
                         return (
                             <div
                                 key={thread.id}
@@ -89,9 +105,21 @@ const Board = () => {
                             >
                                 <div className="thread-item-info">
                                     <div className="thread-item-title">
+                                        {thread.pinned && <i className="fas fa-thumbtack pinned-thread-icon"/>}
+                                        {thread.locked && <i className="fas fa-lock pinned-thread-icon"/>}
                                         {thread.title}
                                     </div>
                                     <ThreadPageLinks thread={thread}/>
+                                </div>
+                                <div className="thread-item-sort">
+                                    <div className="thread-author-info">
+                                        Last Poster
+                                    </div>
+                                    <div className="thread-date-info">
+                                        {dateTimeStrings[0]}
+                                        <br/>
+                                        {dateTimeStrings[1]}
+                                    </div>
                                 </div>
                             </div>
                         );
