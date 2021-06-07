@@ -15,7 +15,7 @@ const Board = () => {
             const res = await fetch(`/api/boards/${boardId}`);
             if (res.ok) {
                 const data = await res.json();
-                setBoard(data);
+                setBoard(data.board);
             }
         })();
     }, [boardId]);

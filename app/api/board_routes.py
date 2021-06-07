@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
-from app.models import Board, db
+from app.models import Board, db, Thread
 from app.forms import BoardForm
 from app.utils import validation_errors_to_error_messages, check_board_membership
 from sqlalchemy import not_, func, desc
@@ -44,8 +44,18 @@ def get_board(board_id):
     membership_check = check_board_membership(board, current_user)
     if "errors" in membership_check:
         return membership_check
-
-    return board.to_dict()
+    threads = db.session \
+        .query(Thread, func.max("posts.created_at").label("last_post")) \
+        .join("posts") \
+        .group_by(Thread) \
+        .filter(Thread.board_id == board_id) \
+        .order_by(desc("last_post")) \
+        .paginate(page=request.args.get("page", default=1, type=int), max_per_page=50)
+    return {
+        "board": board.to_dict(),
+        "threads": [thread.Thread.to_dict() for thread in threads.items],
+        "page_count": threads.pages
+    }
 
 
 @board_routes.route("", methods=["POST"])
