@@ -1,13 +1,10 @@
 import React, {useState, useEffect} from "react";
 import {useSelector} from "react-redux";
-import {useHistory, useLocation} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import "./Directory.css";
 import JoinLeaveButton from "../common/JoinLeaveButton";
 import PageController from "../common/PageController";
-
-function useQuery() {
-    return new URLSearchParams(useLocation().search);
-}
+import useQuery from "../../utils/useQuery";
 
 const Directory = () => {
     const user = useSelector(state => state.session.user);
