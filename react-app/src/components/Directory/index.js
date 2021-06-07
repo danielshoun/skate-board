@@ -44,7 +44,7 @@ const Directory = () => {
                 <input
                     className="directory-search-bar"
                     type="text"
-                    placeholder="Search..."
+                    placeholder="Search Boards..."
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
                     onKeyDown={handleSearchEnter}
@@ -59,7 +59,7 @@ const Directory = () => {
             <div className="directory-content-container">
                 <div className="directory-content-header">
                     <div className="directory-header-info">
-                        {query.get("search") ? `SEARCH FOR: ${query.get("search").toUpperCase()}` : "PUBLIC BOARDS"} -
+                        {query.get("search") ? `SEARCH FOR "${query.get("search").toUpperCase()}"` : "PUBLIC BOARDS"} -
                         PAGE {pageNum || 1}
                     </div>
                     {boards.length > 0 &&

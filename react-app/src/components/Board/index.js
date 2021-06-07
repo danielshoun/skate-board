@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
-import {useParams, Link} from "react-router-dom";
+import {useParams, Link, useHistory} from "react-router-dom";
 import "./Board.css";
 import useQuery from "../../utils/useQuery";
 import JoinLeaveButton from "../common/JoinLeaveButton";
@@ -9,17 +9,22 @@ import ThreadPageLinks from "./ThreadPageLinks";
 
 const Board = () => {
     const query = useQuery();
+    const history = useHistory();
     const user = useSelector(state => state.session.user);
     const {boardId} = useParams();
     const [board, setBoard] = useState({});
     const [threads, setThreads] = useState([]);
     const [pageNum, setPageNum] = useState(Number(query.get("page")) || 1);
     const [pageCount, setPageCount] = useState(1);
+    const [searchInput, setSearchInput] = useState("");
+    const [searchTerm, setSearchTerm] = useState(query.get("search"))
     const [userIsMember, setUserIsMember] = useState(false);
 
     useEffect(() => {
         (async () => {
-                const res = await fetch(`/api/boards/${boardId}${pageNum > 1 ? `?page=${pageNum}` : ""}`);
+                const res = await fetch(`/api/boards/${boardId}?` +
+                    `${searchTerm ? `search=${searchTerm}${pageNum ? "&" : ""}` : ""}` +
+                    `${pageNum ? `page=${pageNum}` : ""}`);
                 if (res.ok) {
                     const data = await res.json();
                     setBoard(data.board);
@@ -28,11 +33,18 @@ const Board = () => {
                 }
             }
         )();
-    }, [boardId, pageNum]);
+    }, [boardId, pageNum, searchTerm]);
 
     useEffect(() => {
         setUserIsMember(user && board.id in user.boards_joined);
     }, [user, board]);
+
+    function handleSearchEnter(e) {
+        if (e.key === "Enter" || e.target.tagName === "BUTTON") {
+            history.push(`/board/${boardId}?search=${searchInput}`);
+            setSearchTerm(searchInput);
+        }
+    }
 
     function getDateString(isoDate) {
         const dateObj = new Date(isoDate + "Z");
@@ -77,8 +89,25 @@ const Board = () => {
                 </div>
             </div>
             <div className="board-content-container">
+                <div className="board-search-container">
+                    <input
+                        className="directory-search-bar"
+                        type="text"
+                        placeholder="Search Threads..."
+                        value={searchInput}
+                        onChange={(e) => setSearchInput(e.target.value)}
+                        onKeyDown={handleSearchEnter}
+                    />
+                    <button
+                        className="btn-secondary directory-search-btn"
+                        onClick={handleSearchEnter}
+                    >
+                        Search
+                    </button>
+                </div>
                 <div className="directory-content-header">
                     <div className="directory-header-info">
+                        {searchTerm && `SEARCH FOR "${searchTerm.toUpperCase()}" IN `}
                         {board.name?.toUpperCase()} -
                         PAGE {pageNum || 1}
                     </div>
@@ -97,7 +126,7 @@ const Board = () => {
                     </div>
                     }
                     {threads.map(thread => {
-                        const dateTimeStrings = getDateString(thread.last_post)
+                        const dateTimeStrings = getDateString(thread.last_post);
                         return (
                             <div
                                 key={thread.id}

@@ -43,6 +43,10 @@
     min-width: 52px;
 }
 
+.board-search-container {
+    margin-bottom: 16px;
+}
+
 
 .thread-item-page-links {
     margin-top: 4px;

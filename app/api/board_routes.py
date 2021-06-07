@@ -44,13 +44,16 @@ def get_board(board_id):
     membership_check = check_board_membership(board, current_user)
     if "errors" in membership_check:
         return membership_check
+    queries = [Thread.board_id == board_id]
+    if request.args.get("search"):
+        queries.append(Thread.title.ilike(f"%{request.args.get('search')}%"))
     threads = db.session \
         .query(
             Thread,
             func.max(Post.created_at).label("last_post"), func.count(Post.thread_id).label("post_count")) \
         .join("posts") \
         .group_by(Thread) \
-        .filter(Thread.board_id == board_id) \
+        .filter(*queries) \
         .order_by(desc(Thread.pinned), desc("last_post")) \
         .paginate(page=request.args.get("page", default=1, type=int), per_page=50)
     result_threads = []
