@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
-from app.models import Board, db, Thread
+from app.models import Board, db, Thread, Post, Membership
 from app.forms import BoardForm
 from app.utils import validation_errors_to_error_messages, check_board_membership
 from sqlalchemy import not_, func, desc
@@ -14,7 +14,7 @@ def get_public_boards():
     if request.args.get("search"):
         queries.append(Board.name.ilike(f"%{request.args.get('search')}%"))
     boards = db.session \
-        .query(Board, func.count("memberships.board_id").label("member_count")) \
+        .query(Board, func.count(Membership.board_id).label("member_count")) \
         .join("members") \
         .group_by(Board) \
         .filter(*queries) \
@@ -45,15 +45,24 @@ def get_board(board_id):
     if "errors" in membership_check:
         return membership_check
     threads = db.session \
-        .query(Thread, func.max("posts.created_at").label("last_post")) \
+        .query(
+            Thread,
+            func.max(Post.created_at).label("last_post"), func.count(Post.thread_id).label("post_count")) \
         .join("posts") \
         .group_by(Thread) \
         .filter(Thread.board_id == board_id) \
         .order_by(desc("last_post")) \
         .paginate(page=request.args.get("page", default=1, type=int), max_per_page=50)
+    result_threads = []
+    for thread in threads.items:
+        print(thread)
+        thread_dict = thread.Thread.to_dict()
+        thread_dict["last_post"] = thread[1].isoformat()
+        thread_dict["post_count"] = thread[2]
+        result_threads.append(thread_dict)
     return {
         "board": board.to_dict(),
-        "threads": [thread.Thread.to_dict() for thread in threads.items],
+        "threads": result_threads,
         "page_count": threads.pages
     }
 
