@@ -1,12 +1,13 @@
 import React, {useRef, useState} from "react";
 import {useSelector} from "react-redux";
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import "./NewThread.css";
 import BBCodeBar from "../common/BBCodeBar";
 import CustomRadioButton from "../common/CustomRadioButton";
 
 const NewThread = () => {
     const user = useSelector(state => state.session.user);
+    const history = useHistory();
     const {boardId} = useParams();
     const board = user.boards_joined[boardId];
     const [title, setTitle] = useState("");
@@ -16,8 +17,30 @@ const NewThread = () => {
     const [errors, setErrors] = useState(false);
     const textRef = useRef();
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
+        const body = {
+            title,
+            pinned,
+            locked,
+            board_id: boardId,
+            first_post_body: postText
+        }
+        const res = await fetch("/api/threads", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        });
+        if (res.ok) {
+            const data = await res.json();
+            if (data.errors) {
+                setErrors(data.errors);
+            } else {
+                history.push(`/thread/${data.id}`);
+            }
+        }
     }
 
     return (
@@ -26,6 +49,7 @@ const NewThread = () => {
                 className="new-thread-form"
                 onSubmit={handleSubmit}
             >
+                <div className="new-thread-header">NEW THREAD IN {board.name.toUpperCase()}</div>
                 <div className="new-thread-form-field">
                     <label
                         className="new-thread-form-label"
@@ -117,6 +141,20 @@ const NewThread = () => {
                             />
                         </div>
                     </div>
+                </div>
+                <div className="new-board-btn-container">
+                    <button
+                        className="btn-primary new-board-btn"
+                        type="submit"
+                    >
+                        CREATE
+                    </button>
+                    <button
+                        className="btn-red new-board-btn"
+                        onClick={null}
+                    >
+                        CANCEL
+                    </button>
                 </div>
             </form>
         </div>

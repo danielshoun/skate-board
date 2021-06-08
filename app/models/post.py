@@ -9,7 +9,7 @@ class Post(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     thread_id = db.Column(db.Integer, db.ForeignKey("threads.id"), nullable=False)
     body = db.Column(db.String(4096), nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     last_edited = db.Column(db.DateTime)
 
     def to_dict(self):

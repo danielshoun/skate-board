@@ -40,6 +40,7 @@ const NewBoard = () => {
                 className="new-board-form"
                 onSubmit={handleSubmit}
             >
+                <div className="new-board-header">NEW BOARD</div>
                 <div className="new-board-form-field">
                     <label
                         className="new-board-form-label"
