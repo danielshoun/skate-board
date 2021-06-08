@@ -16,3 +16,10 @@
 .new-reply-btn {
     min-width: 56px;
 }
+
+.footer-reply-button-container {
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    margin-top: 12px;
+}

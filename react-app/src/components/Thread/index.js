@@ -94,6 +94,28 @@ const Thread = () => {
                     );
                 })}
             </div>
+            <div className="directory-content-header directory-content-footer">
+                <div className="directory-header-info">
+                    {searchTerm && `SEARCH FOR "${searchTerm.toUpperCase()}" IN `}
+                    {`${board.name?.toUpperCase() || ""} > ${thread.title?.toUpperCase() || ""}`} -
+                    PAGE {pageNum || 1}
+                </div>
+                {posts.length > 0 &&
+                <PageController
+                    pageCount={pageCount}
+                    pageNum={pageNum}
+                    pageSetter={setPageNum}
+                />
+                }
+            </div>
+            <div className="footer-reply-button-container">
+                <button
+                    className="btn-primary new-reply-btn"
+                    onClick={() => history.push(`/board/${board.id}/new`)}
+                >
+                    REPLY
+                </button>
+            </div>
         </div>
     );
 };
