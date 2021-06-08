@@ -52,7 +52,7 @@ const NewBoard = () => {
             private: makePrivate
         };
         let res;
-        if(board.id) {
+        if (board.id) {
             res = await fetch(`/api/boards/${board.id}`, {
                 method: "PUT",
                 headers: {
@@ -160,12 +160,12 @@ const NewBoard = () => {
                 </div>
                 <div className="new-board-btn-container">
                     {board.name ?
-                    <button
-                        className="btn-red delete-board-btn"
-                        onClick={openModal}
-                    >
-                        DELETE
-                    </button> : <div/>
+                        <button
+                            className="btn-red delete-board-btn"
+                            onClick={openModal}
+                        >
+                            DELETE
+                        </button> : <div/>
                     }
                     <div>
                         <button

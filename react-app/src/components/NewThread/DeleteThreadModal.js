@@ -1,6 +1,5 @@
 import React from "react";
 import Modal from "react-modal";
-import "./DeleteBoardModal.css";
 import {useDispatch} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {authenticate} from "../../store/session";
@@ -22,16 +21,16 @@ const modalStyles = {
     }
 };
 
-const DeleteBoardModal = ({modalOpen, closeModal, board}) => {
+const DeleteThreadModal = ({modalOpen, closeModal, thread}) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
     async function handleDelete() {
-        const res = await fetch (`/api/boards/${board.id}`, {
+        const res = await fetch(`/api/threads/${thread.id}`, {
             method: "DELETE"
-        })
-        if(res.ok) {
-            history.push("/");
+        });
+        if (res.ok) {
+            history.push(`/board/${thread.board_id}`);
             await dispatch(authenticate());
         }
     }
@@ -46,7 +45,7 @@ const DeleteBoardModal = ({modalOpen, closeModal, board}) => {
         >
             <div className="delete-modal-container">
                 <div className="delete-modal-info">
-                    Are you sure you want to delete "{board.name}"?
+                    Are you sure you want to delete "{thread.title}"?
                 </div>
                 <div className="delete-modal-warning">
                     WARNING: This action cannot be undone!
@@ -67,7 +66,7 @@ const DeleteBoardModal = ({modalOpen, closeModal, board}) => {
                 </div>
             </div>
         </Modal>
-    )
-}
+    );
+};
 
-export default DeleteBoardModal;
+export default DeleteThreadModal;

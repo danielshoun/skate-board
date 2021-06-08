@@ -1,21 +1,51 @@
-import React, {useRef, useState} from "react";
+import React, {useRef, useState, useEffect} from "react";
 import {useSelector} from "react-redux";
 import {useHistory, useParams} from "react-router-dom";
 import "./NewThread.css";
 import BBCodeBar from "../common/BBCodeBar";
 import CustomRadioButton from "../common/CustomRadioButton";
+import DeleteThreadModal from "./DeleteThreadModal";
 
 const NewThread = () => {
     const user = useSelector(state => state.session.user);
     const history = useHistory();
-    const {boardId} = useParams();
+    const {boardId, threadId} = useParams();
     const board = user.boards_joined[boardId];
     const [title, setTitle] = useState("");
     const [postText, setPostText] = useState("");
     const [pinned, setPinned] = useState(false);
     const [locked, setLocked] = useState(false);
     const [errors, setErrors] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
     const textRef = useRef();
+
+    useEffect(() => {
+        (async () => {
+            if (threadId) {
+                const res = await fetch(`/api/threads/${threadId}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.thread.owner_id === user.id) {
+                        setTitle(data.thread.title);
+                        setPostText(data.posts[0].body);
+                        setPinned(data.thread.pinned);
+                        setLocked(data.thread.locked);
+                    }
+
+                }
+            }
+        })();
+    }, [user, threadId]);
+
+    function openModal(e) {
+        e.preventDefault();
+        setModalOpen(true);
+    }
+
+    function closeModal(e) {
+        e.stopPropagation();
+        setModalOpen(false);
+    }
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -25,20 +55,31 @@ const NewThread = () => {
             locked,
             board_id: boardId,
             first_post_body: postText
+        };
+        let res;
+        if(threadId) {
+            res = await fetch(`/api/threads/${threadId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            });
+        } else {
+            res = await fetch("/api/threads", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            });
         }
-        const res = await fetch("/api/threads", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(body)
-        });
         if (res.ok) {
             const data = await res.json();
             if (data.errors) {
                 setErrors(data.errors);
             } else {
-                history.push(`/thread/${data.id}`);
+                history.push(`/board/${boardId}/thread/${data.id}`);
             }
         }
     }
@@ -143,20 +184,35 @@ const NewThread = () => {
                     </div>
                 </div>
                 <div className="new-board-btn-container">
-                    <button
-                        className="btn-primary new-board-btn"
-                        type="submit"
-                    >
-                        CREATE
-                    </button>
-                    <button
-                        className="btn-red new-board-btn"
-                        onClick={null}
-                    >
-                        CANCEL
-                    </button>
+                    {threadId ?
+                        <button
+                            className="btn-red delete-board-btn"
+                            onClick={openModal}
+                        >
+                            DELETE
+                        </button> : <div/>
+                    }
+                    <div>
+                        <button
+                            className="btn-primary new-board-btn"
+                            type="submit"
+                        >
+                            CREATE
+                        </button>
+                        <button
+                            className="btn-red new-board-btn"
+                            onClick={null}
+                        >
+                            CANCEL
+                        </button>
+                    </div>
                 </div>
             </form>
+            <DeleteThreadModal
+                modalOpen={modalOpen}
+                closeModal={closeModal}
+                thread={{id: threadId, title, board_id: boardId}}
+            />
         </div>
     );
 };
