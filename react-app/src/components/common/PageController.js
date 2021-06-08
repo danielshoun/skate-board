@@ -29,7 +29,7 @@ const PageController = ({pageNum, pageCount, pageSetter}) => {
             newPath = newPath.slice(0, newPath.length - 1);
             newPath = newPath.join("=") + "=";
         } else {
-            if (newPath.includes("?")) newPath += "&";
+            if (newPath.includes("?")) newPath += "&page=";
             else newPath += "?page=";
         }
         if (destination === "first") {
