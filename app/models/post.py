@@ -12,6 +12,8 @@ class Post(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     last_edited = db.Column(db.DateTime)
 
+    owner = db.relationship("User")
+
     def to_dict(self):
         return {
             "id": self.id,
@@ -19,5 +21,6 @@ class Post(db.Model):
             "thread_id": self.thread_id,
             "body": self.body,
             "created_at": self.created_at.isoformat(),
-            "last_edited": self.last_edited.isoformat() if self.last_edited else None
+            "last_edited": self.last_edited.isoformat() if self.last_edited else None,
+            "owner": self.owner.to_dict()
         }
