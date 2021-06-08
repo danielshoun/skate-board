@@ -7,6 +7,27 @@ from app.forms import ThreadForm
 thread_routes = Blueprint("threads", __name__)
 
 
+@thread_routes.route("/<int:thread_id>")
+def get_thread(thread_id):
+    thread = Thread.query.get(thread_id)
+    if not thread:
+        {"errors": f"No thread exists with ID: {thread_id}"}, 404
+    board = Board.query.get(thread.board_id)
+    membership_check = check_board_membership(board, current_user)
+    if "errors" in membership_check:
+        return membership_check
+    posts = db.session \
+        .query(Post) \
+        .filter(Post.thread_id == thread_id) \
+        .order_by(Post.created_at) \
+        .paginate(page=request.args.get("page", default=1, type=int), per_page=40)
+    return {
+        "thread": thread.to_dict(),
+        "posts": [post.to_dict() for post in posts.items],
+        "page_count": posts.pages
+    }
+
+
 @thread_routes.route("", methods=["POST"])
 @login_required
 def create_thread():
