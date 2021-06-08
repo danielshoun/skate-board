@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from app.utils import validation_errors_to_error_messages, check_board_membership
 from app.forms import PostForm
 from app.models import Board, db, Thread, Post
+from datetime import datetime
 
 post_routes = Blueprint("posts", __name__)
 
