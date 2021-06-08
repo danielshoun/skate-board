@@ -20,7 +20,7 @@ const Post = ({post}) => {
                     <img className="post-owner-avatar" src={post.owner.avatar_url} alt={post.owner.username}/>
                     }
                     <div className="post-owner-title">
-                        {parser.toReact(post.owner.title)}
+                        {parser.toReact(post.owner.title || "")}
                     </div>
                 </div>
                 <div className="post-date">
