@@ -17,6 +17,8 @@ const Directory = () => {
     const [boards, setBoards] = useState([]);
 
     useEffect(() => {
+        if(searchTerm) setSearchInput(searchTerm);
+        else setSearchInput("");
         (async () => {
             const res = await fetch(
                 `/api/boards?` +
