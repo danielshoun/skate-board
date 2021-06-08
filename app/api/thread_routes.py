@@ -16,9 +16,12 @@ def get_thread(thread_id):
     membership_check = check_board_membership(board, current_user)
     if "errors" in membership_check:
         return membership_check
+    queries = [Post.thread_id == thread_id]
+    if request.args.get("search"):
+        queries.append(Post.body.ilike(f"%{request.args.get('search')}%"))
     posts = db.session \
         .query(Post) \
-        .filter(Post.thread_id == thread_id) \
+        .filter(*queries) \
         .order_by(Post.created_at) \
         .paginate(page=request.args.get("page", default=1, type=int), per_page=40)
     return {

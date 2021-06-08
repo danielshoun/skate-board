@@ -39,8 +39,9 @@
     color: #868789;
 }
 
-.board-edit-btn {
-    min-width: 52px;
+.board-edit-btn,
+.new-thread-btn {
+    min-width: 56px;
 }
 
 .board-control-container {

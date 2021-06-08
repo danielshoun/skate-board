@@ -115,7 +115,7 @@ const Board = () => {
                         className="btn-primary new-thread-btn"
                         onClick={() => history.push(`/board/${boardId}/new`)}
                     >
-                        NEW THREAD
+                        POST
                     </button>
                 </div>
                 <div className="directory-content-header">

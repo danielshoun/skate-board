@@ -6,3 +6,13 @@
     border: 1px solid #343536;
     border-radius: 8px;
 }
+
+.thread-control-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.new-reply-btn {
+    min-width: 56px;
+}
