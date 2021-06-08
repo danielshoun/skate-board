@@ -12,6 +12,7 @@ const ThreadPageLinks = ({thread}) => {
                     .map(num => {
                         return (
                             <Link
+                                key={num}
                                 className="thread-page-link"
                                 to={`/thread/${thread.id}?page=${num}`}
                             >
@@ -25,6 +26,7 @@ const ThreadPageLinks = ({thread}) => {
                             .map(num => {
                                 return (
                                     <Link
+                                        key={num}
                                         className="thread-page-link"
                                         to={`/thread/${thread.id}?page=${num}`}
                                     >
@@ -39,6 +41,7 @@ const ThreadPageLinks = ({thread}) => {
                             .map(num => {
                                 return (
                                     <Link
+                                        key={num}
                                         className="thread-page-link"
                                         to={`/thread/${thread.id}?page=${num}`}
                                     >
