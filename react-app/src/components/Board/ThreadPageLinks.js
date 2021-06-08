@@ -14,7 +14,7 @@ const ThreadPageLinks = ({thread}) => {
                             <Link
                                 key={num}
                                 className="thread-page-link"
-                                to={`/thread/${thread.id}?page=${num}`}
+                                to={`/board/${thread.board_id}/thread/${thread.id}?page=${num}`}
                             >
                                 {num}
                             </Link>
@@ -43,7 +43,7 @@ const ThreadPageLinks = ({thread}) => {
                                     <Link
                                         key={num}
                                         className="thread-page-link"
-                                        to={`/thread/${thread.id}?page=${num}`}
+                                        to={`/board/${thread.board_id}/thread/${thread.id}?page=${num}`}
                                     >
                                         {num}
                                     </Link>

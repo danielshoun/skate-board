@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import {useSelector} from "react-redux";
 import {useHistory, useParams} from "react-router-dom";
 import useQuery from "../../utils/useQuery";
 import "./Thread.css";
@@ -6,6 +7,7 @@ import PageController from "../common/PageController";
 import Post from "../common/Post";
 
 const Thread = () => {
+    const user = useSelector(state => state.session.user);
     const query = useQuery();
     const {threadId} = useParams();
     const history = useHistory();
@@ -58,12 +60,22 @@ const Thread = () => {
                         Search
                     </button>
                 </div>
-                <button
-                    className="btn-primary new-reply-btn"
-                    onClick={() => history.push(`/board/${board.id}/new`)}
-                >
-                    REPLY
-                </button>
+                <div>
+                    {thread.owner_id === user.id &&
+                        <button
+                        className="btn-secondary new-reply-btn"
+                        onClick={() => history.push(`/board/${board.id}/thread/${thread.id}/edit`)}
+                    >
+                        EDIT
+                    </button>
+                    }
+                    <button
+                        className="btn-primary new-reply-btn"
+                        onClick={() => history.push(`/board/${board.id}/new`)}
+                    >
+                        REPLY
+                    </button>
+                </div>
             </div>
             <div className="directory-content-header">
                 <div className="directory-header-info">
@@ -109,6 +121,14 @@ const Thread = () => {
                 }
             </div>
             <div className="footer-reply-button-container">
+                {thread.owner_id === user.id &&
+                <button
+                    className="btn-secondary new-reply-btn"
+                    onClick={() => history.push(`/board/${board.id}/thread/${thread.id}/edit`)}
+                >
+                    EDIT
+                </button>
+                }
                 <button
                     className="btn-primary new-reply-btn"
                     onClick={() => history.push(`/board/${board.id}/new`)}
