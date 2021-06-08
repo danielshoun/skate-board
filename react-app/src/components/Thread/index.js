@@ -3,6 +3,7 @@ import {useHistory, useParams} from "react-router-dom";
 import useQuery from "../../utils/useQuery";
 import "./Thread.css";
 import PageController from "../common/PageController";
+import Post from "../common/Post";
 
 const Thread = () => {
     const query = useQuery();
@@ -89,14 +90,11 @@ const Thread = () => {
                 }
                 {posts.map(post => {
                     return (
-                        <div className="thread-post-item">
-                            {post.body}
-                        </div>
-                    )
+                        <Post key={post.id} post={post}/>
+                    );
                 })}
             </div>
         </div>
     );
 };
-
 export default Thread;

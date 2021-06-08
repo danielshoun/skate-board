@@ -6,6 +6,7 @@ import useQuery from "../../utils/useQuery";
 import JoinLeaveButton from "../common/JoinLeaveButton";
 import PageController from "../common/PageController";
 import ThreadPageLinks from "./ThreadPageLinks";
+import getDateString from "../../utils/getDateString";
 
 const Board = () => {
     const query = useQuery();
@@ -44,21 +45,6 @@ const Board = () => {
             history.push(`/board/${boardId}?search=${searchInput}`);
             setSearchTerm(searchInput);
         }
-    }
-
-    function getDateString(isoDate) {
-        const dateObj = new Date(isoDate + "Z");
-        let timeString;
-        let hours = dateObj.getHours();
-        let minutes = dateObj.getMinutes();
-        let ampm = hours >= 12 ? "PM" : "AM";
-        hours = hours % 12;
-        hours = hours ? hours : 12;
-        minutes = minutes < 10 ? `0${minutes}` : minutes;
-        timeString = `${dateObj.getMonth() + 1}/${
-            dateObj.getDate()
-        }/${dateObj.getFullYear()}, ${hours}:${minutes} ${ampm}`;
-        return timeString;
     }
 
     return (
