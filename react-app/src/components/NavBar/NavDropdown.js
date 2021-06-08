@@ -54,7 +54,6 @@ const NavDropdown = () => {
 
         function handleMenuItemClick(e, id) {
             e.stopPropagation();
-            console.log(id);
             if (id === "directory") {
                 history.push("/directory");
             } else if (id === "create") {

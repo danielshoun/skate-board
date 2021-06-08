@@ -1,0 +1,21 @@
+.delete-modal-container {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    padding: 32px;
+}
+
+.delete-modal-warning {
+    font-weight: bold;
+    color: #bf1e2d;
+    width: 100%;
+    margin-top: 4px;
+}
+
+.delete-modal-button-container {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: right;
+    width: 100%;
+    margin-top: 16px;
+}

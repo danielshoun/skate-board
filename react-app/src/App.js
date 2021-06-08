@@ -37,6 +37,9 @@ function App() {
                     <Route path="/board/:boardId/new">
                         <NewThread/>
                     </Route>
+                    <Route path="/board/:boardId/edit">
+                        <NewBoard/>
+                    </Route>
                     <Route path="/board/:boardId">
                         <Board/>
                     </Route>
