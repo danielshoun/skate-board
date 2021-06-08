@@ -51,13 +51,24 @@ const NewBoard = () => {
             description,
             private: makePrivate
         };
-        const res = await fetch("/api/boards", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(body)
-        });
+        let res;
+        if(board.id) {
+            res = await fetch(`/api/boards/${board.id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            });
+        } else {
+            res = await fetch("/api/boards", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            });
+        }
         if (res.ok) {
             const data = await res.json();
             if (data.errors) {
@@ -66,6 +77,11 @@ const NewBoard = () => {
                 history.push(`/board/${data.id}`);
             }
         }
+    }
+
+    function handleCancel(e) {
+        e.preventDefault();
+        history.goBack();
     }
 
     return (
@@ -160,7 +176,7 @@ const NewBoard = () => {
                         </button>
                         <button
                             className="btn-red new-board-btn"
-                            onClick={null}
+                            onClick={handleCancel}
                         >
                             CANCEL
                         </button>
