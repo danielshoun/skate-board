@@ -65,10 +65,10 @@ def get_board(board_id):
         # This query is a patchy solution for getting the username of the person who made the last post in a thread.
         # I feel like there should be some way to grab it when the query on lines 50-60 executes but I haven't
         # figured that out yet.
-        last_post = db.session\
-            .query(Post.created_at, User.username)\
-            .join(User)\
-            .filter(and_(Post.thread_id == thread.Thread.id, Post.created_at == thread[1]))\
+        last_post = db.session \
+            .query(Post.created_at, User.username) \
+            .join(User) \
+            .filter(and_(Post.thread_id == thread.Thread.id, Post.created_at == thread[1])) \
             .first()
         thread_dict["last_post_author"] = last_post[1]
         thread_dict["post_count"] = thread[2]
