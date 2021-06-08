@@ -134,7 +134,7 @@ const Board = () => {
                     </div>
                     }
                     {threads.map(thread => {
-                        const dateTimeStrings = getDateString(thread.last_post);
+                        const dateTimeStrings = getDateString(thread.last_post_time);
                         return (
                             <div
                                 key={thread.id}
@@ -150,7 +150,7 @@ const Board = () => {
                                 </div>
                                 <div className="thread-item-sort">
                                     <div className="thread-author-info">
-                                        Last Poster
+                                        {thread.last_post_author}
                                     </div>
                                     <div className="thread-date-info">
                                         {dateTimeStrings[0]}

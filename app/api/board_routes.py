@@ -1,9 +1,9 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
-from app.models import Board, db, Thread, Post, Membership
+from app.models import Board, db, Thread, Post, Membership, User
 from app.forms import BoardForm
 from app.utils import validation_errors_to_error_messages, check_board_membership
-from sqlalchemy import not_, func, desc
+from sqlalchemy import not_, func, desc, and_
 
 board_routes = Blueprint("boards", __name__)
 
@@ -50,17 +50,27 @@ def get_board(board_id):
     threads = db.session \
         .query(
             Thread,
-            func.max(Post.created_at).label("last_post"), func.count(Post.thread_id).label("post_count")) \
-        .join("posts") \
+            func.max(Post.created_at).label("last_post"),
+            func.count(Post.thread_id).label("post_count")
+        ) \
+        .join(Post) \
         .group_by(Thread) \
         .filter(*queries) \
         .order_by(desc(Thread.pinned), desc("last_post")) \
         .paginate(page=request.args.get("page", default=1, type=int), per_page=50)
     result_threads = []
     for thread in threads.items:
-        print(thread)
         thread_dict = thread.Thread.to_dict()
-        thread_dict["last_post"] = thread[1].isoformat()
+        thread_dict["last_post_time"] = thread[1].isoformat()
+        # This query is a patchy solution for getting the username of the person who made the last post in a thread.
+        # I feel like there should be some way to grab it when the query on lines 50-60 executes but I haven't
+        # figured that out yet.
+        last_post = db.session\
+            .query(Post.created_at, User.username)\
+            .join(User)\
+            .filter(and_(Post.thread_id == thread.Thread.id, Post.created_at == thread[1]))\
+            .first()
+        thread_dict["last_post_author"] = last_post[1]
         thread_dict["post_count"] = thread[2]
         result_threads.append(thread_dict)
     return {
