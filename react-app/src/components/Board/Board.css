@@ -51,6 +51,11 @@
     border-top: 1px solid #343536;
 }
 
+.thread-item-link {
+    text-decoration: none;
+    color: #d5d8da;
+}
+
 .thread-item-page-links {
     margin-top: 4px;
     color: #636465;
@@ -77,12 +82,23 @@
     margin: 0 4px;
 }
 
+.thread-item-info {
+    max-width: calc(100% - 150px);
+}
+
+.thread-item-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .thread-item-sort {
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
     font-size: 14px;
     color: #868789;
+    min-width: 150px;
 }
 
 .thread-author-info {

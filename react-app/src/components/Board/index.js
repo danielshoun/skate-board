@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
-import {useParams, useHistory} from "react-router-dom";
+import {useParams, useHistory, Link} from "react-router-dom";
 import "./Board.css";
 import useQuery from "../../utils/useQuery";
 import JoinLeaveButton from "../common/JoinLeaveButton";
@@ -149,11 +149,13 @@ const Board = () => {
                                 className="board-thread-item"
                             >
                                 <div className="thread-item-info">
-                                    <div className="thread-item-title">
-                                        {thread.pinned && <i className="fas fa-thumbtack pinned-thread-icon"/>}
-                                        {thread.locked && <i className="fas fa-lock pinned-thread-icon"/>}
-                                        {thread.title}
-                                    </div>
+                                    <Link className="thread-item-link" to={`/board/${board.id}/thread/${thread.id}`}>
+                                        <div className="thread-item-title">
+                                            {thread.pinned && <i className="fas fa-thumbtack pinned-thread-icon"/>}
+                                            {thread.locked && <i className="fas fa-lock pinned-thread-icon"/>}
+                                            {thread.title}
+                                        </div>
+                                    </Link>
                                     <ThreadPageLinks thread={thread}/>
                                 </div>
                                 <div className="thread-item-sort">
