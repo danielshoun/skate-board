@@ -11,7 +11,7 @@ thread_routes = Blueprint("threads", __name__)
 def get_thread(thread_id):
     thread = Thread.query.get(thread_id)
     if not thread:
-        {"errors": f"No thread exists with ID: {thread_id}"}, 404
+        return {"errors": f"No thread exists with ID: {thread_id}"}, 404
     board = Board.query.get(thread.board_id)
     membership_check = check_board_membership(board, current_user)
     if "errors" in membership_check:
