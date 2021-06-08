@@ -58,7 +58,7 @@ const Board = () => {
         timeString = `${dateObj.getMonth() + 1}/${
             dateObj.getDate()
         }/${dateObj.getFullYear()}, ${hours}:${minutes} ${ampm}`;
-        return timeString.split(", ");
+        return timeString;
     }
 
     return (
@@ -130,7 +130,10 @@ const Board = () => {
                 <div className="board-thread-list">
                     {threads.length === 0 &&
                     <div className="no-results-info">
-                        This board doesn't have any threads yet. Get the conversation started!
+                        {searchTerm ?
+                            `Your search for ${searchTerm} did not yield any results.` :
+                            "This board doesn't have any threads yet. Get the conversation started!"
+                        }
                     </div>
                     }
                     {threads.map(thread => {
@@ -149,13 +152,11 @@ const Board = () => {
                                     <ThreadPageLinks thread={thread}/>
                                 </div>
                                 <div className="thread-item-sort">
-                                    <div className="thread-author-info">
-                                        {thread.last_post_author}
-                                    </div>
                                     <div className="thread-date-info">
-                                        {dateTimeStrings[0]}
-                                        <br/>
-                                        {dateTimeStrings[1]}
+                                        {dateTimeStrings}
+                                    </div>
+                                    <div className="thread-author-info">
+                                        by {thread.last_post_author}
                                     </div>
                                 </div>
                             </div>

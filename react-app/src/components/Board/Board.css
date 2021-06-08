@@ -79,16 +79,23 @@
 
 .thread-item-sort {
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: column nowrap;
     align-items: center;
+    font-size: 14px;
+    color: #868789;
 }
 
 .thread-author-info {
-    margin-right: 16px;
-    font-size: 14px;
+    margin-top: 4px;
+    width: 100%;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .thread-date-info {
-    text-align: center;
+    width: 100%;
+    text-align: right;
     font-size: 14px;
+    color: #868789;
 }
