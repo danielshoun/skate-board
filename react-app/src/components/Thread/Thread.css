@@ -1,0 +1,8 @@
+.thread-container {
+    margin: 0 auto;
+    padding: 32px;
+    max-width: 900px;
+    background-color: #1a1a1b;
+    border: 1px solid #343536;
+    border-radius: 8px;
+}

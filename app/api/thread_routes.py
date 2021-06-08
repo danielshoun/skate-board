@@ -22,6 +22,7 @@ def get_thread(thread_id):
         .order_by(Post.created_at) \
         .paginate(page=request.args.get("page", default=1, type=int), per_page=40)
     return {
+        "board": board.to_dict(),
         "thread": thread.to_dict(),
         "posts": [post.to_dict() for post in posts.items],
         "page_count": posts.pages

@@ -6,6 +6,7 @@ import Directory from "./components/Directory";
 import NavBar from "./components/NavBar";
 import NewBoard from "./components/NewBoard";
 import NewThread from "./components/NewThread";
+import Thread from "./components/Thread";
 import {authenticate} from "./store/session";
 
 function App() {
@@ -34,11 +35,14 @@ function App() {
                     <Route path="/board/new" exact={true}>
                         <NewBoard/>
                     </Route>
+                    <Route path="/board/:boardId/edit">
+                        <NewBoard/>
+                    </Route>
                     <Route path="/board/:boardId/new">
                         <NewThread/>
                     </Route>
-                    <Route path="/board/:boardId/edit">
-                        <NewBoard/>
+                    <Route path="/board/:boardId/thread/:threadId">
+                        <Thread/>
                     </Route>
                     <Route path="/board/:boardId">
                         <Board/>
