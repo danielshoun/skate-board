@@ -8,6 +8,19 @@ from datetime import datetime
 post_routes = Blueprint("posts", __name__)
 
 
+@post_routes.route("/<int:post_id>")
+def get_post(post_id):
+    post = Post.query.get(post_id)
+    if not post:
+        return {"errors": f"No thread exists with ID: {post_id}"}, 400
+    thread = Thread.query.get(post.thread_id)
+    board = Board.query.get(thread.board_id)
+    membership_check = check_board_membership(board, current_user)
+    if "errors" in membership_check:
+        return membership_check
+    return {"post": post.to_dict(), "thread": thread.to_dict(), "board": board.to_dict()}
+
+
 @post_routes.route("", methods=["POST"])
 @login_required
 def create_post():

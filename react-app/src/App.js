@@ -5,6 +5,7 @@ import Board from "./components/Board";
 import Directory from "./components/Directory";
 import NavBar from "./components/NavBar";
 import NewBoard from "./components/NewBoard";
+import NewReply from "./components/NewReply";
 import NewThread from "./components/NewThread";
 import Thread from "./components/Thread";
 import {authenticate} from "./store/session";
@@ -43,6 +44,12 @@ function App() {
                     </Route>
                     <Route path="/board/:boardId/thread/:threadId/edit">
                         <NewThread/>
+                    </Route>
+                    <Route path="/board/:boardId/thread/:threadId/post/:postId/edit">
+                        <NewReply/>
+                    </Route>
+                    <Route path="/board/:boardId/thread/:threadId/post">
+                        <NewReply/>
                     </Route>
                     <Route path="/board/:boardId/thread/:threadId">
                         <Thread/>

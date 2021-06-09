@@ -62,7 +62,7 @@ const Thread = () => {
                 </div>
                 <div>
                     {thread.owner_id === user.id &&
-                        <button
+                    <button
                         className="btn-secondary new-reply-btn"
                         onClick={() => history.push(`/board/${board.id}/thread/${thread.id}/edit`)}
                     >
@@ -71,7 +71,7 @@ const Thread = () => {
                     }
                     <button
                         className="btn-primary new-reply-btn"
-                        onClick={() => history.push(`/board/${board.id}/new`)}
+                        onClick={() => history.push(`/board/${board.id}/thread/${thread.id}/post`)}
                     >
                         REPLY
                     </button>
@@ -102,7 +102,7 @@ const Thread = () => {
                 }
                 {posts.map(post => {
                     return (
-                        <Post key={post.id} post={post}/>
+                        <Post key={post.id} post={post} thread={thread} board={board}/>
                     );
                 })}
             </div>
@@ -131,7 +131,7 @@ const Thread = () => {
                 }
                 <button
                     className="btn-primary new-reply-btn"
-                    onClick={() => history.push(`/board/${board.id}/new`)}
+                    onClick={() => history.push(`/board/${board.id}/thread/${thread.id}/post`)}
                 >
                     REPLY
                 </button>
