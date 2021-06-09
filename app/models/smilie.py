@@ -5,7 +5,7 @@ class Smilie(db.Model):
     __tablename__ = "smilies"
 
     id = db.Column(db.Integer, primary_key=True)
-    board_id = db.Column(db.Integer, db.ForeignKey("boards.id"), primary_key=True)
+    board_id = db.Column(db.Integer, db.ForeignKey("boards.id"))
     url = db.Column(db.String(500), nullable=False)
     name = db.Column(db.String(16), nullable=False)
 

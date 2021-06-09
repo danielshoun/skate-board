@@ -5,7 +5,7 @@ import {useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import getDateString from "../../utils/getDateString";
 
-const Post = ({post, thread, board}) => {
+const Post = ({post, thread, board, isFirstPost}) => {
     const user = useSelector(state => state.session.user);
     const history = useHistory();
 
@@ -34,7 +34,7 @@ const Post = ({post, thread, board}) => {
             </div>
             <div className="post-body">
                 {parser.toReact(post.body)}
-                {post.owner_id === user.id &&
+                {post.owner_id === user.id && !isFirstPost &&
                 <div className="post-button-container">
                     <button
                         className="btn-secondary new-reply-btn"

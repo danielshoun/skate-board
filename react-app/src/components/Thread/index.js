@@ -102,7 +102,13 @@ const Thread = () => {
                 }
                 {posts.map(post => {
                     return (
-                        <Post key={post.id} post={post} thread={thread} board={board}/>
+                        <Post
+                            key={post.id}
+                            post={post} 
+                            thread={thread}
+                            board={board}
+                            isFirstPost={post.id === posts[0].id && !searchTerm && pageNum === 1}
+                        />
                     );
                 })}
             </div>
