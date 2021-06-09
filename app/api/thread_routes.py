@@ -1,9 +1,10 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
-from app.models import Board, db, Thread, Post
+from app.models import Board, db, Thread, Post, Smilie
 from app.utils import validation_errors_to_error_messages, check_board_membership
 from app.forms import ThreadForm
 from datetime import datetime
+from sqlalchemy import or_
 
 thread_routes = Blueprint("threads", __name__)
 
@@ -25,8 +26,15 @@ def get_thread(thread_id):
         .filter(*queries) \
         .order_by(Post.created_at) \
         .paginate(page=request.args.get("page", default=1, type=int), per_page=40)
+    smilies = db.session \
+        .query(Smilie) \
+        .filter(or_(Smilie.board_id == board.id, Smilie.board_id == None)) \
+        .order_by(Smilie.board_id, Smilie.name) \
+        .all()
+    print(smilies)
     return {
         "board": board.to_dict(),
+        "smilies": [smilie.to_dict() for smilie in smilies],
         "thread": thread.to_dict(),
         "posts": [post.to_dict() for post in posts.items],
         "page_count": posts.pages

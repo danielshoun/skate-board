@@ -4,8 +4,9 @@ import "./Post.css";
 import {useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import getDateString from "../../utils/getDateString";
+import reactStringReplace from "react-string-replace";
 
-const Post = ({post, thread, board, isFirstPost}) => {
+const Post = ({post, thread, board, isFirstPost, smilies}) => {
     const user = useSelector(state => state.session.user);
     const history = useHistory();
 
@@ -13,6 +14,25 @@ const Post = ({post, thread, board, isFirstPost}) => {
         const dateObj = new Date(isoDate + "Z");
         let month = dateObj.toLocaleString("en-us", {month: "short"});
         return `${month} ${dateObj.getDate()}, ${dateObj.getFullYear()}`;
+    }
+
+    function replaceSmilies(input) {
+        let output = []
+        input.forEach(el => {
+            console.log(el)
+            if(typeof el === "string") {
+                let temp = el;
+                smilies.forEach(smilie => {
+                    temp = reactStringReplace(temp, smilie.name, (match, i) => {
+                        return <img key={`${smilie.name}_${i}`} src={smilie.url} alt={smilie.name}/>
+                    })
+                })
+                output.push(temp);
+            } else {
+                output.push(el);
+            }
+        })
+        return output;
     }
 
     return (
@@ -25,7 +45,7 @@ const Post = ({post, thread, board, isFirstPost}) => {
                     <img className="post-owner-avatar" src={post.owner.avatar_url} alt={post.owner.username}/>
                     }
                     <div className="post-owner-title">
-                        {parser.toReact(post.owner.title || "")}
+                        {replaceSmilies(parser.toReact(post.owner.title || ""))}
                     </div>
                 </div>
                 <div className="post-date">
@@ -33,7 +53,7 @@ const Post = ({post, thread, board, isFirstPost}) => {
                 </div>
             </div>
             <div className="post-body">
-                {parser.toReact(post.body)}
+                <div>{replaceSmilies(parser.toReact(post.body))}</div>
                 {post.owner_id === user.id && !isFirstPost &&
                 <div className="post-button-container">
                     <button

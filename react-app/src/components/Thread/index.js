@@ -12,6 +12,7 @@ const Thread = () => {
     const {threadId} = useParams();
     const history = useHistory();
     const [board, setBoard] = useState({});
+    const [smilies, setSmilies] = useState([]);
     const [thread, setThread] = useState({});
     const [posts, setPosts] = useState([]);
     const [pageNum, setPageNum] = useState(Number(query.get("page")) || 1);
@@ -27,6 +28,7 @@ const Thread = () => {
             if (res.ok) {
                 const data = await res.json();
                 setBoard(data.board);
+                setSmilies(data.smilies);
                 setThread(data.thread);
                 setPosts(data.posts);
                 setPageCount(data.page_count);
@@ -104,9 +106,10 @@ const Thread = () => {
                     return (
                         <Post
                             key={post.id}
-                            post={post} 
+                            post={post}
                             thread={thread}
                             board={board}
+                            smilies={smilies}
                             isFirstPost={post.id === posts[0].id && !searchTerm && pageNum === 1}
                         />
                     );
