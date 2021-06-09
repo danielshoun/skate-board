@@ -11,6 +11,8 @@ class Thread(db.Model):
     pinned = db.Column(db.Boolean, nullable=False, default=False)
     locked = db.Column(db.Boolean, nullable=False, default=False)
 
+    posts = db.relationship("Post")
+
     def to_dict(self):
         return {
             "id": self.id,
