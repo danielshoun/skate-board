@@ -54,6 +54,9 @@ const BBCodeBar = ({inputRef, setter}) => {
         const textInSelect = input.value.substring(startSelect, endSelect);
         const textAfterSelect = input.value.substring(endSelect, input.value.length);
         setter(input.value = textBeforeSelect + openTag + textInSelect + closeTag + textAfterSelect);
+        input.focus();
+        input.selectionStart = startSelect + openTag.length;
+        input.selectionEnd = endSelect + closeTag.length - 1;
     }
 
     return (

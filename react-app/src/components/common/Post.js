@@ -17,6 +17,7 @@ const Post = ({post, thread, board, isFirstPost, smilies}) => {
     }
 
     function replaceSmilies(input) {
+        // Input: An array where elements are either strings or React components.
         let output = []
         input.forEach(el => {
             console.log(el)
@@ -29,6 +30,15 @@ const Post = ({post, thread, board, isFirstPost, smilies}) => {
                 })
                 output.push(temp);
             } else {
+                el.props.children.forEach((child, i) => {
+                    let temp = child;
+                    smilies.forEach(smilie => {
+                        temp = reactStringReplace(temp, smilie.name, (match, i) => {
+                            return <img key={`${smilie.name}_${i}`} src={smilie.url} alt={smilie.name}/>
+                        })
+                    })
+                    el.props.children[i] = temp;
+                })
                 output.push(el);
             }
         })
