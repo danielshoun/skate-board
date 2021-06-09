@@ -1,0 +1,47 @@
+.smilie-modal-container {
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 32px;
+}
+
+.smilie-modal-header {
+    margin-bottom: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #868789;
+}
+
+.smilie-card-container {
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+    width: 586px;
+}
+
+.first-smilie-container {
+    margin-bottom: 16px;
+}
+
+.smilie-card {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    border: 1px solid #343536;
+    border-radius: 4px;
+    margin: 8px;
+    width: 62px;
+    cursor: pointer;
+}
+
+.smilie-image {
+    height: auto;
+    align-self: center;
+}
+
+.smilie-name {
+    margin-top: 8px;
+    font-size: 14px;
+}
+

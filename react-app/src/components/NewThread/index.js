@@ -120,7 +120,7 @@ const NewThread = () => {
                     >
                         POST TEXT
                     </label>
-                    <BBCodeBar inputRef={textRef} setter={setPostText}/>
+                    <BBCodeBar inputRef={textRef} setter={setPostText} boardId={boardId}/>
                     <textarea
                         className="new-thread-form-input"
                         name="name"

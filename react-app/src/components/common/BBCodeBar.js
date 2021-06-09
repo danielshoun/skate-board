@@ -1,12 +1,24 @@
 import React, {useEffect, useState} from "react";
 import "./BBCodeBar.css";
+import SmilieModal from "./SmilieModal";
 
-const BBCodeBar = ({inputRef, setter}) => {
+const BBCodeBar = ({inputRef, setter, boardId}) => {
     const [input, setInput] = useState(inputRef.current);
+    const [modalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
         setInput(inputRef.current);
     }, [inputRef]);
+
+    function openModal(e) {
+        e.preventDefault();
+        setModalOpen(true);
+    }
+
+    function closeModal(e) {
+        e.stopPropagation();
+        setModalOpen(false);
+    }
 
     function handleBBCodeInsert(type) {
         let openTag, closeTag;
@@ -56,6 +68,7 @@ const BBCodeBar = ({inputRef, setter}) => {
         setter(input.value = textBeforeSelect + openTag + textInSelect + closeTag + textAfterSelect);
         input.focus();
         input.selectionStart = startSelect + openTag.length;
+        console.log(input.selectionStart)
         input.selectionEnd = endSelect + closeTag.length - 1;
     }
 
@@ -71,7 +84,14 @@ const BBCodeBar = ({inputRef, setter}) => {
                 <i className="fas fa-link bb-code-icon" onClick={() => handleBBCodeInsert("link")}/>
                 <i className="fas fa-image bb-code-icon" onClick={() => handleBBCodeInsert("image")}/>
             </div>
-            <i className="fas fa-smile bb-code-icon"/>
+            <i className="fas fa-smile bb-code-icon" onClick={openModal}/>
+            <SmilieModal
+                modalOpen={modalOpen}
+                closeModal={closeModal}
+                input={input}
+                boardId={boardId}
+                setter={setter}
+            />
         </div>
     );
 };
