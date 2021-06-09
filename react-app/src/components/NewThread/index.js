@@ -200,10 +200,10 @@ const NewThread = () => {
                             CREATE
                         </button>
                         <button
-                            className="btn-red new-board-btn"
+                            className="btn-secondary new-board-btn"
                             onClick={null}
                         >
-                            CANCEL
+                            BACK
                         </button>
                     </div>
                 </div>

@@ -175,10 +175,10 @@ const NewBoard = () => {
                             CREATE
                         </button>
                         <button
-                            className="btn-red new-board-btn"
+                            className="btn-secondary new-board-btn"
                             onClick={handleCancel}
                         >
-                            CANCEL
+                            BACK
                         </button>
                     </div>
                 </div>

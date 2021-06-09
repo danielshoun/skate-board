@@ -3,13 +3,14 @@ import {useSelector} from "react-redux";
 import {useHistory, useParams} from "react-router-dom";
 // import "./NewThread.css";
 import BBCodeBar from "../common/BBCodeBar";
+import DeletePostModal from "./DeletePostModal";
 // import DeleteThreadModal from "./DeleteThreadModal";
 
 const NewReply = () => {
     const user = useSelector(state => state.session.user);
     const history = useHistory();
     const {boardId, threadId, postId} = useParams();
-    const [thread, setThread] = useState({})
+    const [thread, setThread] = useState({});
     const [postText, setPostText] = useState("");
     const [errors, setErrors] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
@@ -27,7 +28,7 @@ const NewReply = () => {
                     }
                 }
             } else {
-                const res = await fetch(`/api/threads/${threadId}`)
+                const res = await fetch(`/api/threads/${threadId}`);
                 if (res.ok) {
                     const data = await res.json();
                     setThread(data.thread);
@@ -53,7 +54,7 @@ const NewReply = () => {
             body: postText
         };
         let res;
-        if(postId) {
+        if (postId) {
             res = await fetch(`/api/posts/${postId}`, {
                 method: "PUT",
                 headers: {
@@ -86,7 +87,9 @@ const NewReply = () => {
                 className="new-thread-form"
                 onSubmit={handleSubmit}
             >
-                <div className="new-thread-header">{postId ? "EDITING POST IN" : "REPLYING TO"} "{thread.title?.toUpperCase()}"</div>
+                <div
+                    className="new-thread-header">{postId ? "EDITING POST IN" : "REPLYING TO"} "{thread.title?.toUpperCase()}"
+                </div>
                 <div className="new-thread-form-field">
                     <label
                         className="new-thread-form-label"
@@ -136,11 +139,12 @@ const NewReply = () => {
                     </div>
                 </div>
             </form>
-            {/*<DeleteThreadModal*/}
-            {/*    modalOpen={modalOpen}*/}
-            {/*    closeModal={closeModal}*/}
-            {/*    thread={{id: threadId, title, board_id: boardId}}*/}
-            {/*/>*/}
+            <DeletePostModal
+                modalOpen={modalOpen}
+                closeModal={closeModal}
+                postId={postId}
+                thread={thread}
+            />
         </div>
     );
 };
