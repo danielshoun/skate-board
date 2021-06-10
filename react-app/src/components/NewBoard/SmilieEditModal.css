@@ -1,0 +1,27 @@
+.edit-header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.smilie-card.edit-default-smilie {
+    cursor: default;
+}
+
+.smilie-image-container {
+    text-align: center;
+    height: 32px;
+    width: 80px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.new-smilie-img {
+    max-height: 32px;
+    max-width: 80px;
+    width: auto;
+    height: auto;
+    align-self: center;
+}

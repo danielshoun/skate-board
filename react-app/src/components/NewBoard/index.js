@@ -4,6 +4,7 @@ import {useHistory, useParams} from "react-router-dom";
 import "./NewBoard.css";
 import CustomRadioButton from "../common/CustomRadioButton";
 import DeleteBoardModal from "./DeleteBoardModal";
+import SmilieEditModal from "./SmilieEditModal";
 
 const NewBoard = () => {
     const user = useSelector(state => state.session.user);
@@ -14,7 +15,8 @@ const NewBoard = () => {
     const [description, setDescription] = useState("");
     const [makePrivate, setMakePrivate] = useState(false);
     const [errors, setErrors] = useState({});
-    const [modalOpen, setModalOpen] = useState(false);
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [smilieModalOpen, setSmilieModalOpen] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -34,14 +36,24 @@ const NewBoard = () => {
         )();
     }, [user, boardId]);
 
-    function openModal(e) {
+    function openDeleteModal(e) {
         e.preventDefault();
-        setModalOpen(true);
+        setDeleteModalOpen(true);
     }
 
-    function closeModal(e) {
+    function closeDeleteModal(e) {
         e.stopPropagation();
-        setModalOpen(false);
+        setDeleteModalOpen(false);
+    }
+
+    function openSmilieModal(e) {
+        e.preventDefault();
+        setSmilieModalOpen(true);
+    }
+
+    function closeSmilieModal(e) {
+        e.stopPropagation();
+        setSmilieModalOpen(false);
     }
 
     async function handleSubmit(e) {
@@ -136,33 +148,38 @@ const NewBoard = () => {
                         })}
                     </div>
                 </div>
-                <div className="new-board-form-field">
-                    <label
-                        className="new-board-form-label"
-                        htmlFor="description"
-                    >
-                        MAKE PRIVATE?
-                    </label>
-                    <div className="radio-button-container">
-                        <CustomRadioButton
-                            setter={setMakePrivate}
-                            currentValue={makePrivate}
-                            targetValue={true}
-                            text={"Yes"}
-                        />
-                        <CustomRadioButton
-                            setter={setMakePrivate}
-                            currentValue={makePrivate}
-                            targetValue={false}
-                            text={"No"}
-                        />
+                <div className="new-board-bottom-row">
+                    <div className="new-board-form-field">
+                        <label
+                            className="new-board-form-label"
+                            htmlFor="description"
+                        >
+                            MAKE PRIVATE?
+                        </label>
+                        <div className="radio-button-container">
+                            <CustomRadioButton
+                                setter={setMakePrivate}
+                                currentValue={makePrivate}
+                                targetValue={true}
+                                text={"Yes"}
+                            />
+                            <CustomRadioButton
+                                setter={setMakePrivate}
+                                currentValue={makePrivate}
+                                targetValue={false}
+                                text={"No"}
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        {boardId && <i className="fas fa-smile bb-code-icon" onClick={openSmilieModal}/>}
                     </div>
                 </div>
                 <div className="new-board-btn-container">
-                    {board.name ?
+                    {boardId ?
                         <button
                             className="btn-red delete-board-btn"
-                            onClick={openModal}
+                            onClick={openDeleteModal}
                         >
                             DELETE
                         </button> : <div/>
@@ -172,7 +189,7 @@ const NewBoard = () => {
                             className="btn-primary new-board-btn"
                             type="submit"
                         >
-                            CREATE
+                            {boardId ? "EDIT" : "CREATE"}
                         </button>
                         <button
                             className="btn-secondary new-board-btn"
@@ -184,9 +201,14 @@ const NewBoard = () => {
                 </div>
             </form>
             <DeleteBoardModal
-                modalOpen={modalOpen}
-                closeModal={closeModal}
+                modalOpen={deleteModalOpen}
+                closeModal={closeDeleteModal}
                 board={board}
+            />
+            <SmilieEditModal
+                modalOpen={smilieModalOpen}
+                closeModal={closeSmilieModal}
+                boardId={board.id}
             />
         </div>
     );
