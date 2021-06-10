@@ -43,6 +43,10 @@ const AddSmilieForm = ({goBack, boardId}) => {
             goBack();
         } else {
             setImageLoading(false);
+            const data = await res.json();
+            if(data.errors) {
+                setErrors(data.errors)
+            }
             console.log("error");
         }
     }
@@ -93,7 +97,7 @@ const AddSmilieForm = ({goBack, boardId}) => {
                 />
                 <button className="btn-secondary file-browse-btn" onClick={customFileBtn}>BROWSE</button>
                 <div className="new-board-error-div">
-                    {errors.name && errors.name.map((error, i) => {
+                    {errors.image && errors.image.map((error, i) => {
                         return (
                             <div key={i}>{error}</div>
                         );

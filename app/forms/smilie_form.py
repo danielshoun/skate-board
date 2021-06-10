@@ -10,7 +10,7 @@ def check_dimensions(_form, field):
     width, height = img.size
     print(f"Width: {width} pixels, Height: {height} pixels")
     if width > 80 or height > 32:
-        raise ValidationError("Image must be less than 80x32 pixels in size.")
+        raise ValidationError("Image size must be less than 80x32 pixels.")
 
 
 def check_filetype(_form, field):

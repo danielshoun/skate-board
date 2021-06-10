@@ -1,10 +1,10 @@
-import React from "react";
 import parser from "bbcode-to-react";
-import "./Post.css";
+import React from "react";
 import {useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
-import getDateString from "../../utils/getDateString";
 import reactStringReplace from "react-string-replace";
+import getDateString from "../../utils/getDateString";
+import "./Post.css";
 
 const Post = ({post, thread, board, isFirstPost, smilies}) => {
     const user = useSelector(state => state.session.user);
@@ -18,33 +18,19 @@ const Post = ({post, thread, board, isFirstPost, smilies}) => {
 
     function replaceSmilies(input) {
         // Input: An array where elements are either strings or React components.
-        let output = []
-        input.forEach(el => {
-            if(typeof el === "string") {
+        return input.map(el => {
+            if (typeof el === "string") {
                 let temp = el;
                 smilies.forEach(smilie => {
                     temp = reactStringReplace(temp, smilie.name, (match, i) => {
                         return <img key={`${smilie.name}_${i}`} src={smilie.url} alt={smilie.name}/>
                     })
                 })
-                output.push(temp);
+                return temp
             } else {
-                el.props.children.forEach((child, i) => {
-                    let temp = child;
-                    // while (typeof temp !== "string") {
-                    //     temp = temp.props.children;
-                    // }
-                    smilies.forEach(smilie => {
-                        temp = reactStringReplace(temp, smilie.name, (match, i) => {
-                            return <img key={`${smilie.name}_${i}`} src={smilie.url} alt={smilie.name}/>
-                        })
-                    })
-                    el.props.children[i] = temp;
-                })
-                output.push(el);
+                return React.cloneElement(el, el.props, replaceSmilies(el.props.children))
             }
-        })
-        return output;
+        });
     }
 
     return (
