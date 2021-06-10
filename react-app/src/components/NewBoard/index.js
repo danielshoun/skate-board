@@ -61,7 +61,8 @@ const NewBoard = () => {
         const body = {
             name,
             description,
-            private: makePrivate
+            private: makePrivate,
+            is_update: board.id
         };
         let res;
         if (board.id) {
@@ -87,6 +88,11 @@ const NewBoard = () => {
                 setErrors(data.errors);
             } else {
                 history.push(`/board/${data.id}`);
+            }
+        } else {
+            const data = await res.json();
+            if (data.errors) {
+                setErrors(data.errors);
             }
         }
     }

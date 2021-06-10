@@ -25,3 +25,11 @@
     height: auto;
     align-self: center;
 }
+
+.add-smilie-btn-container {
+    display: flex;
+}
+
+.add-smilie-btn {
+    flex: 1;
+}

@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from "react";
 import Modal from "react-modal";
 import "./SmilieEditModal.css";
+import AddSmilieForm from "./AddSmilieForm";
 
 const modalStyles = {
     content: {
@@ -24,12 +25,9 @@ const SmilieModal = ({modalOpen, closeModal, boardId}) => {
     const [customSmilies, setCustomSmilies] = useState([]);
     const [showingAddForm, setShowingAddForm] = useState(false);
     const [showingEditForm, setShowingEditForm] = useState(false);
-    const [smilieNameInput, setSmilieNameInput] = useState("");
-    const [smilieImageInput, setSmilieImageInput] = useState("");
-    const [smilieImageURL, setSmilieImageURL] = useState("");
-    const [imageLoading, setImageLoading] = useState(false);
-    const fileInputRef = useRef();
-    const [errors, setErrors] = useState([]);
+
+
+
 
     useEffect(() => {
         if (modalOpen && !showingAddForm && !showingEditForm) {
@@ -51,12 +49,7 @@ const SmilieModal = ({modalOpen, closeModal, boardId}) => {
         }
     }, [modalOpen]);
 
-    useEffect(() => {
-        if (smilieImageInput) {
-            const url = URL.createObjectURL(smilieImageInput);
-            setSmilieImageURL(url);
-        }
-    }, [smilieImageInput]);
+
 
     function handleFormSwitch(e, type) {
         e.preventDefault();
@@ -64,16 +57,6 @@ const SmilieModal = ({modalOpen, closeModal, boardId}) => {
             setShowingAddForm(true);
             setShowingEditForm(false);
         }
-    }
-
-    function updateImage(e) {
-        e.preventDefault();
-        setSmilieImageInput(e.target.files[0]);
-    }
-
-    function customFileBtn(e) {
-        e.preventDefault();
-        fileInputRef.current.click();
     }
 
     return (
@@ -85,61 +68,7 @@ const SmilieModal = ({modalOpen, closeModal, boardId}) => {
             appElement={document.getElementById("root")}
         >
             <div className="smilie-modal-container">
-                {showingAddForm &&
-                <>
-                    <form>
-                        <div className="new-board-form-field">
-                            <label
-                                className="new-board-form-label"
-                                htmlFor="name"
-                            >
-                                SMILIE NAME
-                            </label>
-                            <input
-                                className="new-board-form-input"
-                                name="name"
-                                type="text"
-                                value={smilieNameInput}
-                                onChange={(e) => setSmilieNameInput(e.target.value)}
-                            />
-                            <div className="new-board-error-div">
-                                {errors.name && errors.name.map((error, i) => {
-                                    return (
-                                        <div key={i}>{error}</div>
-                                    );
-                                })}
-                            </div>
-                        </div>
-                        <div className="new-board-form-field">
-                            <label
-                                className="new-board-form-label"
-                                htmlFor="file"
-                            >
-                                SMILIE IMAGE
-                            </label>
-                            <input
-                                className="btn-secondary"
-                                name="name"
-                                type="file"
-                                ref={fileInputRef}
-                                onChange={updateImage}
-                                hidden={true}
-                            />
-                            <button className="btn-secondary file-browse-btn" onClick={customFileBtn}>BROWSE</button>
-                            <div className="new-board-error-div">
-                                {errors.name && errors.name.map((error, i) => {
-                                    return (
-                                        <div key={i}>{error}</div>
-                                    );
-                                })}
-                            </div>
-                            <div className="smilie-image-container">
-                                {smilieImageURL && <img className="new-smilie-img" src={smilieImageURL} alt={smilieNameInput}/>}
-                            </div>
-                        </div>
-                    </form>
-                </>
-                }
+                {showingAddForm && <AddSmilieForm goBack={() => setShowingAddForm(false)}/>}
                 {!showingAddForm && !showingEditForm &&
                 <>
                     <div className="smilie-modal-header">DEFAULT</div>
