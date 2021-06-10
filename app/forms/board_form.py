@@ -5,7 +5,6 @@ from app.models import Board
 
 
 def board_exists(form, field):
-    print(form.data)
     board = Board.query.filter(Board.name == field.data).first()
     if board and not (form.data["is_update"] == board.id):
         raise ValidationError("Board already exists with that name.")

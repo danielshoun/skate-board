@@ -24,6 +24,7 @@ email-validator = "*"
 flask-login = "*"
 faker = "*"
 boto3 = "*"
+pillow = "*"
 
 [dev-packages]
 psycopg2-binary = "==2.8.6"
