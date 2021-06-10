@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
 from app.models import Board, db, Thread, Post, Smilie
+from app.forms import SmilieForm
 from sqlalchemy import or_
 
 smilie_routes = Blueprint("smilies", __name__)
@@ -12,12 +13,15 @@ def get_smilies(board_id):
     return jsonify([smilie.to_dict() for smilie in smilies])
 
 
-@smilie_routes.route("/")
+@smilie_routes.route("", methods=["POST"])
 @login_required
 def create_smilie():
-    board = Board.query.get(request.json["board_id"])
-    if not board:
-        return {"errors": f"No post exists with ID: {request.json['board_id']}"}, 400
-    if not (board.owner_id == current_user.id):
-        return {"errors": "You must be the owner of a board to add smilies."}, 400
-    print(request.files)
+    form = SmilieForm()
+    form["csrf_token"].data = request.cookies["csrf_token"]
+    if form.validate_on_submit():
+        board = Board.query.get(form.data["board_id"])
+        if not board:
+            return {"errors": f"No post exists with ID: {request.json['board_id']}"}, 400
+        if not (board.owner_id == current_user.id):
+            return {"errors": "You must be the owner of a board to add smilies."}, 40
+        print(form.data["image"])

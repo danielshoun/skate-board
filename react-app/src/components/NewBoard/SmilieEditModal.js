@@ -68,7 +68,7 @@ const SmilieModal = ({modalOpen, closeModal, boardId}) => {
             appElement={document.getElementById("root")}
         >
             <div className="smilie-modal-container">
-                {showingAddForm && <AddSmilieForm goBack={() => setShowingAddForm(false)}/>}
+                {showingAddForm && <AddSmilieForm goBack={() => setShowingAddForm(false)} boardId={boardId}/>}
                 {!showingAddForm && !showingEditForm &&
                 <>
                     <div className="smilie-modal-header">DEFAULT</div>

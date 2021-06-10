@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 
-const AddSmilieForm = ({goBack}) => {
+const AddSmilieForm = ({goBack, boardId}) => {
     const [smilieNameInput, setSmilieNameInput] = useState("");
     const [smilieImageURL, setSmilieImageURL] = useState("");
     const [imageLoading, setImageLoading] = useState(false);
@@ -25,9 +25,26 @@ const AddSmilieForm = ({goBack}) => {
         fileInputRef.current.click();
     }
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
+        const formData = new FormData();
+        formData.append("image", smilieImageInput);
+        formData.append("name", smilieNameInput);
+        formData.append("board_id", boardId)
+        setImageLoading(true);
 
+        const res = await fetch("/api/smilies", {
+            method: "POST",
+            body: formData
+        });
+        if(res.ok) {
+            await res.json();
+            setImageLoading(false);
+            goBack();
+        } else {
+            setImageLoading(false);
+            console.log("error");
+        }
     }
 
     function handleCancel(e) {
