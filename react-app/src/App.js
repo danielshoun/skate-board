@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {useDispatch} from "react-redux";
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {BrowserRouter, Route, Switch, Redirect} from "react-router-dom";
 import Board from "./components/Board";
 import Directory from "./components/Directory";
 import NavBar from "./components/NavBar";
@@ -58,9 +58,19 @@ function App() {
                         <Board/>
                     </Route>
                     <Route path="/" exact={true}>
-                        <h1>My Home Page</h1>
+                        <Redirect to="/directory"/>
                     </Route>
                 </Switch>
+            </div>
+            <div className='about-info'>
+                <div>
+                    Created by Danny Shoun.
+                    <a href='https://github.com/danielshoun/cast-cloud'><i className="fab fa-github about-icon"/></a>
+                    <a href='https://www.linkedin.com/in/daniel-shoun/'><i className="fab fa-linkedin about-icon"/></a>
+                </div>
+                <div>
+                </div>
+                <div><a href='mailto:danielshoun@protonmail.com' className='email-link'>danielshoun@protonmail.com</a></div>
             </div>
         </BrowserRouter>
     );

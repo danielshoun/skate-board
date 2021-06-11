@@ -16,6 +16,14 @@
     margin-left: 16px;
     min-width: 200px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.nav-logo-image {
+    height: 32px;
+    width: auto;
+    margin-right: 8px;
 }
 
 .nav-logo-text {

@@ -117,6 +117,7 @@ const AddSmilieForm = ({goBack, boardId}) => {
                 <button
                     className="btn-secondary add-smilie-btn"
                     onClick={handleCancel}
+                    disabled={imageLoading}
                 >
                     BACK
                 </button>

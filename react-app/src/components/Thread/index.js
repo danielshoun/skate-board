@@ -5,6 +5,7 @@ import useQuery from "../../utils/useQuery";
 import "./Thread.css";
 import PageController from "../common/PageController";
 import Post from "../common/Post";
+import NotFound from "../Errors/NotFound";
 
 const Thread = () => {
     const user = useSelector(state => state.session.user);
@@ -19,6 +20,7 @@ const Thread = () => {
     const [pageCount, setPageCount] = useState(1);
     const [searchInput, setSearchInput] = useState("");
     const [searchTerm, setSearchTerm] = useState(query.get("search"));
+    const [loadError, setLoadError] = useState("");
 
     useEffect(() => {
         (async () => {
@@ -32,6 +34,10 @@ const Thread = () => {
                 setThread(data.thread);
                 setPosts(data.posts);
                 setPageCount(data.page_count);
+                setLoadError("");
+            } else {
+                const data = await res.json();
+                setLoadError(data.errors);
             }
         })();
     }, [threadId, pageNum, searchTerm]);
@@ -41,6 +47,12 @@ const Thread = () => {
             history.push(`/board/${board.id}/thread/${thread.id}?search=${searchInput}`);
             setSearchTerm(searchInput);
         }
+    }
+
+    if(loadError) {
+        return (
+            <NotFound error={loadError}/>
+        )
     }
 
     return (
@@ -71,12 +83,14 @@ const Thread = () => {
                         EDIT
                     </button>
                     }
+                    {!thread.locked &&
                     <button
                         className="btn-primary new-reply-btn"
                         onClick={() => history.push(`/board/${board.id}/thread/${thread.id}/post`)}
                     >
                         REPLY
                     </button>
+                    }
                 </div>
             </div>
             <div className="directory-content-header">
@@ -138,12 +152,14 @@ const Thread = () => {
                     EDIT
                 </button>
                 }
+                {!thread.locked &&
                 <button
                     className="btn-primary new-reply-btn"
                     onClick={() => history.push(`/board/${board.id}/thread/${thread.id}/post`)}
                 >
                     REPLY
                 </button>
+                }
             </div>
         </div>
     );

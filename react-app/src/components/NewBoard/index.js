@@ -3,6 +3,7 @@ import {useSelector} from "react-redux";
 import {useHistory, useParams} from "react-router-dom";
 import "./NewBoard.css";
 import CustomRadioButton from "../common/CustomRadioButton";
+import NotFound from "../Errors/NotFound";
 import DeleteBoardModal from "./DeleteBoardModal";
 import SmilieEditModal from "./SmilieEditModal";
 
@@ -15,6 +16,7 @@ const NewBoard = () => {
     const [description, setDescription] = useState("");
     const [makePrivate, setMakePrivate] = useState(false);
     const [errors, setErrors] = useState({});
+    const [loadError, setLoadError] = useState("");
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const [smilieModalOpen, setSmilieModalOpen] = useState(false);
 
@@ -30,6 +32,9 @@ const NewBoard = () => {
                             setDescription(data.board.description);
                             setMakePrivate(data.board.private);
                         }
+                    } else {
+                        const data = await res.json();
+                        setLoadError(data.errors);
                     }
                 }
             }
@@ -100,6 +105,12 @@ const NewBoard = () => {
     function handleCancel(e) {
         e.preventDefault();
         history.goBack();
+    }
+
+    if(loadError) {
+        return (
+            <NotFound error={loadError}/>
+        )
     }
 
     return (

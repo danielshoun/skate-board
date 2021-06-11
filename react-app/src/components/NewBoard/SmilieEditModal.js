@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect} from "react";
 import Modal from "react-modal";
 import "./SmilieEditModal.css";
 import AddSmilieForm from "./AddSmilieForm";

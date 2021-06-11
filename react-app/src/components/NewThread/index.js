@@ -4,6 +4,7 @@ import {useHistory, useParams} from "react-router-dom";
 import "./NewThread.css";
 import BBCodeBar from "../common/BBCodeBar";
 import CustomRadioButton from "../common/CustomRadioButton";
+import NotFound from "../Errors/NotFound";
 import DeleteThreadModal from "./DeleteThreadModal";
 
 const NewThread = () => {
@@ -17,6 +18,7 @@ const NewThread = () => {
     const [locked, setLocked] = useState(false);
     const [errors, setErrors] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
+    const [loadError, setLoadError] = useState("");
     const textRef = useRef();
 
     useEffect(() => {
@@ -30,8 +32,13 @@ const NewThread = () => {
                         setPostText(data.posts[0].body);
                         setPinned(data.thread.pinned);
                         setLocked(data.thread.locked);
+                        setLoadError("");
+                    } else {
+                        setLoadError("You must be the owner of a thread to edit it.")
                     }
-
+                } else {
+                    const data = await res.json();
+                    setLoadError(data.errors);
                 }
             }
         })();
@@ -57,7 +64,7 @@ const NewThread = () => {
             first_post_body: postText
         };
         let res;
-        if(threadId) {
+        if (threadId) {
             res = await fetch(`/api/threads/${threadId}`, {
                 method: "PUT",
                 headers: {
@@ -82,6 +89,12 @@ const NewThread = () => {
                 history.push(`/board/${boardId}/thread/${data.id}`);
             }
         }
+    }
+
+    if((boardId && !board) || loadError) {
+        return (
+            <NotFound error={loadError || `No board exists with ID: ${boardId}`}/>
+        )
     }
 
     return (
@@ -137,6 +150,7 @@ const NewThread = () => {
                         })}
                     </div>
                 </div>
+                {board.owner_id === user.id &&
                 <div className="thread-radio-fields">
                     <div className="new-thread-form-field">
                         <label
@@ -183,6 +197,7 @@ const NewThread = () => {
                         </div>
                     </div>
                 </div>
+                }
                 <div className="new-board-btn-container">
                     {threadId ?
                         <button

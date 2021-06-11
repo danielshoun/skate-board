@@ -5,6 +5,7 @@ import "./Board.css";
 import useQuery from "../../utils/useQuery";
 import JoinLeaveButton from "../common/JoinLeaveButton";
 import PageController from "../common/PageController";
+import NotFound from "../Errors/NotFound";
 import ThreadPageLinks from "./ThreadPageLinks";
 import getDateString from "../../utils/getDateString";
 
@@ -20,6 +21,7 @@ const Board = () => {
     const [searchInput, setSearchInput] = useState("");
     const [searchTerm, setSearchTerm] = useState(query.get("search"));
     const [userIsMember, setUserIsMember] = useState(false);
+    const [error, setError] = useState("");
 
     useEffect(() => {
         (async () => {
@@ -31,6 +33,10 @@ const Board = () => {
                     setBoard(data.board);
                     setThreads(data.threads);
                     setPageCount(data.page_count);
+                    setError("");
+                } else {
+                    const data = await res.json();
+                    setError(data.errors);
                 }
             }
         )();
@@ -45,6 +51,12 @@ const Board = () => {
             history.push(`/board/${boardId}?search=${searchInput}`);
             setSearchTerm(searchInput);
         }
+    }
+
+    if (error) {
+        return (
+            <NotFound error={error} />
+        )
     }
 
     return (
@@ -97,12 +109,14 @@ const Board = () => {
                             Search
                         </button>
                     </div>
+                    {userIsMember &&
                     <button
                         className="btn-primary new-thread-btn"
                         onClick={() => history.push(`/board/${boardId}/new`)}
                     >
                         POST
                     </button>
+                    }
                 </div>
                 <div className="directory-content-header">
                     <div className="directory-header-info">

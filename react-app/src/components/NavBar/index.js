@@ -56,6 +56,7 @@ const NavBar = () => {
                     className="nav-logo-area"
                     onClick={() => history.push("/")}
                 >
+                    <img src="/logo.png" alt="Skate Board" className="nav-logo-image"/>
                     <span className="nav-logo-text">Skate Board</span>
                 </div>
                 <div className="nav-dropdown-area">

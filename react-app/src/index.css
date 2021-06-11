@@ -47,3 +47,18 @@ body {
 .btn-red:hover {
     opacity: 1.0;
 }
+
+.about-info {
+    text-align: center;
+    margin: 64px;
+    color: #868789;
+}
+
+.about-icon {
+    margin-left: 8px;
+    color: #0079d3;
+}
+
+.email-link {
+    color: #0079d3;
+}

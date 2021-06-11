@@ -1,0 +1,22 @@
+.error-container {
+    margin: 0 auto;
+    padding: 32px;
+    max-width: 700px;
+    background-color: #1a1a1b;
+    border: 1px solid #343536;
+    border-radius: 8px;
+}
+
+.error-header {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.error-description {
+
+}
+
+.error-page-container {
+    margin-top: 16px;
+    color: #bf1e2d;
+}
