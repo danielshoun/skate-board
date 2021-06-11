@@ -11,13 +11,16 @@ def check_dimensions(_form, field):
     print(f"Width: {width} pixels, Height: {height} pixels")
     if width > 80 or height > 32:
         raise ValidationError("Image size must be less than 80x32 pixels.")
+    field.data.stream.seek(0)
 
 
 def check_filetype(_form, field):
     try:
         img = Image.open(field.data.stream)
-        if not (img.format == "JPEG" or img.format == "GIF" or img.format == "PNG"):
+        format = img.format
+        if not (format == "JPEG" or format == "GIF" or format == "PNG"):
             raise ValidationError("Image must be a JPEG, PNG, or GIF.")
+        field.data.stream.seek(0)
     except UnidentifiedImageError:
         raise StopValidation("File is not an image.")
 
