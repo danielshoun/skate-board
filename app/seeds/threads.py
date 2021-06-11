@@ -7,7 +7,7 @@ fake = Faker()
 
 # TODO: Add in fake dates to first posts to allow for more realistic looking chronology.
 def seed_threads():
-    for i in range(1, 11):
+    for i in range(1, 6):
         board = Board.query.get(i)
         for _ in range(randint(10, 20)):
             thread = Thread(
