@@ -12,7 +12,7 @@ post_routes = Blueprint("posts", __name__)
 def get_post(post_id):
     post = Post.query.get(post_id)
     if not post:
-        return {"errors": f"No thread exists with ID: {post_id}"}, 400
+        return {"errors": f"No post exists with ID: {post_id}"}, 400
     thread = Thread.query.get(post.thread_id)
     board = Board.query.get(thread.board_id)
     membership_check = check_board_membership(board, current_user)

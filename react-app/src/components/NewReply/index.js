@@ -3,6 +3,7 @@ import {useSelector} from "react-redux";
 import {useHistory, useParams} from "react-router-dom";
 // import "./NewThread.css";
 import BBCodeBar from "../common/BBCodeBar";
+import NotFound from "../Errors/NotFound";
 import DeletePostModal from "./DeletePostModal";
 // import DeleteThreadModal from "./DeleteThreadModal";
 
@@ -14,6 +15,7 @@ const NewReply = () => {
     const [postText, setPostText] = useState("");
     const [errors, setErrors] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
+    const [loadError, setLoadError] = useState("");
     const textRef = useRef();
 
     useEffect(() => {
@@ -25,13 +27,21 @@ const NewReply = () => {
                     if (data.post.owner_id === user.id) {
                         setPostText(data.post.body);
                         setThread(data.thread);
+                    } else {
+                        setLoadError("You must be the owner of a post to edit it.")
                     }
+                } else {
+                    const data = await res.json();
+                    setLoadError(data.errors);
                 }
             } else {
                 const res = await fetch(`/api/threads/${threadId}`);
                 if (res.ok) {
                     const data = await res.json();
                     setThread(data.thread);
+                } else {
+                    const data = await res.json();
+                    setLoadError(data.errors);
                 }
             }
         })();
@@ -79,6 +89,12 @@ const NewReply = () => {
                 history.push(`/board/${boardId}/thread/${data.thread_id}`);
             }
         }
+    }
+
+    if(loadError) {
+        return (
+            <NotFound error={loadError}/>
+        )
     }
 
     return (
