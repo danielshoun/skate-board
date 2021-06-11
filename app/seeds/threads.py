@@ -9,7 +9,7 @@ fake = Faker()
 def seed_threads():
     for i in range(1, 11):
         board = Board.query.get(i)
-        for _ in range(randint(10, 61)):
+        for _ in range(randint(10, 20)):
             thread = Thread(
                 owner_id=choice(board.members).id,
                 board_id=board.id,

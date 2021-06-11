@@ -15,7 +15,7 @@ def seed_users():
     users = []
     used_names = set()
     used_emails = set()
-    for i in range(49):
+    for i in range(19):
         username = fake.user_name()
         while username in used_names or len(username) > 16:
             username = fake.user_name()

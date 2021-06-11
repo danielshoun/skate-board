@@ -21,10 +21,10 @@ def seed_boards():
         )
     ]
 
-    for _ in range(8):
+    for _ in range(3):
         boards.append(
             Board(
-                owner_id=randint(2, 50),
+                owner_id=randint(2, 20),
                 name=fake.word(),
                 description=fake.sentence(),
                 private=False
@@ -37,7 +37,7 @@ def seed_boards():
     db.session.add_all(boards)
     db.session.commit()
 
-    for i in range(2, 51):
+    for i in range(2, 21):
         for board in boards:
             if randint(1, 10) > 5 and board.owner_id != i:
                 board.members.append(User.query.get(i))
