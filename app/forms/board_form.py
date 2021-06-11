@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField
+from wtforms import StringField, IntegerField, BooleanField
 from wtforms.validators import DataRequired, Length, ValidationError
 from app.models import Board
 
@@ -18,4 +18,4 @@ class BoardForm(FlaskForm):
         "description", validators=[Length(0, 256, "Board description is too long.  (Max 256 characters)")]
     )
     private = BooleanField("private")
-    is_update = BooleanField("is_update")
+    is_update = IntegerField("is_update")

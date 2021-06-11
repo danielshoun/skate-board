@@ -2,6 +2,7 @@ import React, {useState, useEffect, useRef} from "react";
 import Modal from "react-modal";
 import "./SmilieEditModal.css";
 import AddSmilieForm from "./AddSmilieForm";
+import EditSmilieForm from "./EditSmilieForm";
 
 const modalStyles = {
     content: {
@@ -25,6 +26,7 @@ const SmilieModal = ({modalOpen, closeModal, boardId}) => {
     const [customSmilies, setCustomSmilies] = useState([]);
     const [showingAddForm, setShowingAddForm] = useState(false);
     const [showingEditForm, setShowingEditForm] = useState(false);
+    const [editSmilie, setEditSmilie] = useState({});
 
 
 
@@ -51,11 +53,14 @@ const SmilieModal = ({modalOpen, closeModal, boardId}) => {
 
 
 
-    function handleFormSwitch(e, type) {
+    function handleFormSwitch(e, type, smilie) {
         e.preventDefault();
         if (type === "add") {
             setShowingAddForm(true);
             setShowingEditForm(false);
+        } else {
+            setEditSmilie(smilie);
+            setShowingEditForm(true);
         }
     }
 
@@ -69,6 +74,7 @@ const SmilieModal = ({modalOpen, closeModal, boardId}) => {
         >
             <div className="smilie-modal-container">
                 {showingAddForm && <AddSmilieForm goBack={() => setShowingAddForm(false)} boardId={boardId}/>}
+                {showingEditForm && <EditSmilieForm goBack={() => setShowingEditForm(false)} smilie={editSmilie}/>}
                 {!showingAddForm && !showingEditForm &&
                 <>
                     <div className="smilie-modal-header">DEFAULT</div>
@@ -95,7 +101,7 @@ const SmilieModal = ({modalOpen, closeModal, boardId}) => {
                         }
                         {customSmilies.map(smilie => {
                             return (
-                                <div key={smilie.id} className="smilie-card" onClick={(e) => null}>
+                                <div key={smilie.id} className="smilie-card" onClick={(e) => handleFormSwitch(e, "edit", smilie)}>
                                     <img src={smilie.url} alt={smilie.name} className="smilie-image"/>
                                     <div className="smilie-name">{smilie.name}</div>
                                 </div>

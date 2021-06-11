@@ -43,7 +43,24 @@ def create_smilie():
     return {"errors": validation_errors_to_error_messages(form.errors)}, 400
 
 
-@smilie_routes.route("/<int:smilie_id", methods=["DELETE"])
+@smilie_routes.route("/<int:smilie_id>", methods=["PUT"])
+@login_required
+def update_smilie(smilie_id):
+    form = SmilieForm()
+    form["csrf_token"].data = request.cookies["csrf_token"]
+    if form.validate_on_submit():
+        smilie = Smilie.query.get(smilie_id)
+        board = Board.query.get(smilie.board_id)
+        if not (board.owner_id == current_user.id):
+            return {"errors": "You must be the owner of a board to add smilies."}, 400
+        smilie.name = f":{form.data['name']}:"
+        db.session.add(smilie)
+        db.session.commit()
+        return smilie.to_dict()
+    return {"errors": validation_errors_to_error_messages(form.errors)}, 400
+
+
+@smilie_routes.route("/<int:smilie_id>", methods=["DELETE"])
 @login_required
 def delete_smilie(smilie_id):
     smilie = Smilie.query.get(smilie_id)

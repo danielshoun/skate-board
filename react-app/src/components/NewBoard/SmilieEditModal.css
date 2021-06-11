@@ -33,3 +33,8 @@
 .add-smilie-btn {
     flex: 1;
 }
+
+.delete-confirm-div {
+    width: 100%;
+    max-width: 238px;
+}
