@@ -28,7 +28,7 @@ def create_smilie():
         image = request.files["image"]
         image.filename = aws.get_unique_filename(image.filename)
         print(image)
-        upload = aws.upload_file_to_s3(image, image.filename, image.content_type)
+        upload = aws.upload_file_to_s3(image)
         if "url" not in upload:
             return upload, 400
         url = upload["url"]
