@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import "./NavBar.css";
+import logo from "./logo.png";
 import {logout} from "../../store/session";
 import LogRegModal from "./LogRegModal";
 import NavDropdown from "./NavDropdown";
@@ -56,7 +57,7 @@ const NavBar = () => {
                     className="nav-logo-area"
                     onClick={() => history.push("/")}
                 >
-                    <img src="/logo.png" alt="Skate Board" className="nav-logo-image"/>
+                    <img src={logo} alt="Skate Board" className="nav-logo-image"/>
                     <span className="nav-logo-text">Skate Board</span>
                 </div>
                 <div className="nav-dropdown-area">
