@@ -33,7 +33,7 @@ def create_smilie():
             return upload, 400
         url = upload["url"]
         smilie = Smilie(
-            name=form.data["name"],
+            name=f":{form.data['name']}:",
             url=url,
             board_id=form.data['board_id']
         )
