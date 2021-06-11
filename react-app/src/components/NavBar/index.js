@@ -31,17 +31,17 @@ const NavBar = () => {
         setModalType(null);
     }
 
-    function handleSettings(e) {
-        e.stopPropagation();
-        history.push("/settings");
-        setUserMenuOpen(false);
-    }
-
-    function handleMyBoards(e) {
-        e.stopPropagation();
-        history.push("/boards/manage");
-        setUserMenuOpen(false);
-    }
+    // function handleSettings(e) {
+    //     e.stopPropagation();
+    //     history.push("/settings");
+    //     setUserMenuOpen(false);
+    // }
+    //
+    // function handleMyBoards(e) {
+    //     e.stopPropagation();
+    //     history.push("/boards/manage");
+    //     setUserMenuOpen(false);
+    // }
 
     async function handleLogout(e) {
         e.stopPropagation();
