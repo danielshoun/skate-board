@@ -41,3 +41,19 @@ def create_smilie():
         db.session.commit()
         return smilie.to_dict()
     return {"errors": validation_errors_to_error_messages(form.errors)}, 400
+
+
+@smilie_routes.route("/<int:smilie_id", methods=["DELETE"])
+@login_required
+def delete_smilie(smilie_id):
+    smilie = Smilie.query.get(smilie_id)
+    if not smilie:
+        return {"errors": f"No smilie exists with ID: {smilie_id}"}, 400
+    board = Board.query.get(smilie.board_id)
+    if not board:
+        return {"errors": "Default smilies cannot be deleted."}, 400
+    if not (board.owner_id == current_user.id):
+        return {"errors": "You must be the owner of a board to delete smilies."}, 400
+    db.session.delete(smilie)
+    db.session.commit()
+    return smilie.to_dict()

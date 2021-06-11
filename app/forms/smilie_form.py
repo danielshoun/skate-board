@@ -10,8 +10,8 @@ def check_dimensions(_form, field):
     img = Image.open(field.data.stream)
     width, height = img.size
     print(f"Width: {width} pixels, Height: {height} pixels")
-    if width > 80 or height > 32:
-        raise ValidationError("Image size must be less than 80x32 pixels.")
+    if width > 128 or height > 32:
+        raise ValidationError("Image size must be less than 128x32 pixels.")
     field.data.stream.seek(0)
 
 
@@ -27,10 +27,10 @@ def check_filetype(_form, field):
 
 
 def smilie_exists_in_board(form, field):
-    defaultSmilie = Smilie.query.filter(and_(Smilie.name == f":{field.data}:", Smilie.board_id == None))
+    defaultSmilie = Smilie.query.filter(and_(Smilie.name == f":{field.data}:", Smilie.board_id == None)).all()
     customSmilie = Smilie.query.filter(
         and_(Smilie.name == f":{field.data}:", Smilie.board_id == form.data["board_id"])
-        ).first()
+    ).first()
     if defaultSmilie or customSmilie:
         raise ValidationError("Name already exists in board.")
 
