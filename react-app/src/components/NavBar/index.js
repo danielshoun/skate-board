@@ -85,20 +85,20 @@ const NavBar = () => {
                     }
                     {userMenuOpen &&
                     <div className="nav-user-menu">
-                        <div
-                            className="nav-user-menu-item"
-                            onClick={handleSettings}
-                        >
-                            <i className="fas fa-cog btn-user-menu"/>
-                            <span className="user-menu-text">SETTINGS</span>
-                        </div>
-                        <div
-                            className="nav-user-menu-item"
-                            onClick={handleMyBoards}
-                        >
-                            <i className="fas fa-clipboard-list btn-user-menu"/>
-                            <span className="user-menu-text">MY BOARDS</span>
-                        </div>
+                        {/*<div*/}
+                        {/*    className="nav-user-menu-item"*/}
+                        {/*    onClick={handleSettings}*/}
+                        {/*>*/}
+                        {/*    <i className="fas fa-cog btn-user-menu"/>*/}
+                        {/*    <span className="user-menu-text">SETTINGS</span>*/}
+                        {/*</div>*/}
+                        {/*<div*/}
+                        {/*    className="nav-user-menu-item"*/}
+                        {/*    onClick={handleMyBoards}*/}
+                        {/*>*/}
+                        {/*    <i className="fas fa-clipboard-list btn-user-menu"/>*/}
+                        {/*    <span className="user-menu-text">MY BOARDS</span>*/}
+                        {/*</div>*/}
                         <div
                             className="nav-user-menu-item"
                             onClick={handleLogout}
