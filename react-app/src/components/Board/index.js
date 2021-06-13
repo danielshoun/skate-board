@@ -81,7 +81,7 @@ const Board = () => {
                         setBoard={setBoard}
                     />
                     }
-                    {user && board.owner_id === user.id &&
+                    {user && board.owner_id === user?.id &&
                     <button
                         className="btn-secondary board-edit-btn"
                         onClick={() => history.push(`/board/${boardId}/edit`)}

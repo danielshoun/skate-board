@@ -27,7 +27,7 @@ const NewThread = () => {
                 const res = await fetch(`/api/threads/${threadId}`);
                 if (res.ok) {
                     const data = await res.json();
-                    if (data.thread.owner_id === user.id) {
+                    if (data.thread.owner_id === user?.id) {
                         setTitle(data.thread.title);
                         setPostText(data.posts[0].body);
                         setPinned(data.thread.pinned);
@@ -150,7 +150,7 @@ const NewThread = () => {
                         })}
                     </div>
                 </div>
-                {board.owner_id === user.id &&
+                {board.owner_id === user?.id &&
                 <div className="thread-radio-fields">
                     <div className="new-thread-form-field">
                         <label

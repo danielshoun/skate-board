@@ -26,7 +26,7 @@ const NewBoard = () => {
                     const res = await fetch(`/api/boards/${boardId}`);
                     if (res.ok) {
                         const data = await res.json();
-                        if (data.board.owner_id === user.id) {
+                        if (data.board.owner_id === user?.id) {
                             setBoard(data.board);
                             setName(data.board.name);
                             setDescription(data.board.description);

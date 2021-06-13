@@ -52,7 +52,7 @@ const Post = ({post, thread, board, isFirstPost, smilies}) => {
             </div>
             <div className="post-body">
                 <div>{replaceSmilies(parser.toReact(post.body))}</div>
-                {post.owner_id === user.id && !isFirstPost &&
+                {post.owner_id === user?.id && !isFirstPost &&
                 <div className="post-button-container">
                     <button
                         className="btn-secondary new-reply-btn"

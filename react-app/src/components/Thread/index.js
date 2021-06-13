@@ -75,7 +75,7 @@ const Thread = () => {
                     </button>
                 </div>
                 <div>
-                    {thread.owner_id === user.id &&
+                    {thread.owner_id === user?.id &&
                     <button
                         className="btn-secondary new-reply-btn"
                         onClick={() => history.push(`/board/${board.id}/thread/${thread.id}/edit`)}
@@ -83,7 +83,7 @@ const Thread = () => {
                         EDIT
                     </button>
                     }
-                    {!thread.locked &&
+                    {!thread.locked && user &&
                     <button
                         className="btn-primary new-reply-btn"
                         onClick={() => history.push(`/board/${board.id}/thread/${thread.id}/post`)}
@@ -144,7 +144,7 @@ const Thread = () => {
                 }
             </div>
             <div className="footer-reply-button-container">
-                {thread.owner_id === user.id &&
+                {thread.owner_id === user?.id &&
                 <button
                     className="btn-secondary new-reply-btn"
                     onClick={() => history.push(`/board/${board.id}/thread/${thread.id}/edit`)}
@@ -152,7 +152,7 @@ const Thread = () => {
                     EDIT
                 </button>
                 }
-                {!thread.locked &&
+                {!thread.locked && user &&
                 <button
                     className="btn-primary new-reply-btn"
                     onClick={() => history.push(`/board/${board.id}/thread/${thread.id}/post`)}

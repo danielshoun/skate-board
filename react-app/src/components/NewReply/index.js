@@ -24,7 +24,7 @@ const NewReply = () => {
                 const res = await fetch(`/api/posts/${postId}`);
                 if (res.ok) {
                     const data = await res.json();
-                    if (data.post.owner_id === user.id) {
+                    if (data.post.owner_id === user?.id) {
                         setPostText(data.post.body);
                         setThread(data.thread);
                     } else {
