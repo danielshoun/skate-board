@@ -1,98 +1,80 @@
-# Flask React Project
+#Skate Board
 
-This is the backend for the Flask React project.
+Live Link: [Skate Board](https://skate-board-js.herokuapp.com)
 
-## Getting started
+![SkateBoardScreenShot](https://i.imgur.com/6AKfdos.png)
+
+Skate Board is a community-building website where users can create and manage their own message boards. Skate Board
+draws inspiration from Reddit, but uses a more traditional message board system for communication. Posts are shown in
+chronological order, and users can style their posts using BBCode and smilie keywords.
+
+Detailed information on the database schema and routing can be found in the [wiki](https://github.com/danielshoun/skate-board/wiki/MVP-Features).
+
+#Technologies
+
+**Front End**
+- React
+- Redux
+
+**Back End**
+- Python
+- Flask
+- SQLAlchemy
+- PostgreSQL
+
+#Features
+
+- User authentication system.
+- User created message boards that can be edited/deleted.
+- Users can join any message board not marked as private via a directory.
+- Members of a board can post threads that other members can reply to.
+- Editing/Deleting of threads and included posts.
+- Board owners can pin threads to the top of the board or lock them to prevent further replies.
+- Posts can be formatted using [BBCode](https://www.bbcode.org/). A formatting toolbar is included for ease of use.
+- Users can include smilie keywords in their posts that will automatically be replaced with an image.
+- Board owners can upload custom smilies for use only within a certain board.
+
+#Usage
+
+To run this application:
 
 1. Clone this repository (only this branch)
 
    ```bash
-   git clone https://github.com/appacademy-starters/python-project-starter.git
+   git clone https://github.com/danielshoun/skate-board.git
    ```
 
 2. Install dependencies
 
-      ```bash
-      pipenv install --dev -r dev-requirements.txt && pipenv install -r requirements.txt
-      ```
+   ```bash
+   pipenv install --dev -r dev-requirements.txt && pipenv install -r requirements.txt
+   ```
 
-3. Create a **.env** file based on the example with proper settings for your
-   development environment
-4. Setup your PostgreSQL user, password and database and make sure it matches your **.env** file
+3. Create a **.env** file based on the **.env.example** file
+4. Setup a PostgreSQL user, password and database that matches the **.env** file
 
-5. Get into your pipenv, migrate your database, seed your database, and run your flask app
+5. Enter the python virtual environment, migrate the database, seed the database, and run the flask app
 
    ```bash
    pipenv shell
    ```
-
    ```bash
    flask db upgrade
    ```
-
    ```bash
    flask seed all
    ```
-
    ```bash
    flask run
    ```
 
-6. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
-
-***
-*IMPORTANT!*
-   If you add any python dependencies to your pipfiles, you'll need to regenerate your requirements.txt before deployment.
-   You can do this by running:
-
+6. Install front end dependencies from the `react-app` directory and then run the front end server
    ```bash
-   pipenv lock -r > requirements.txt
+   npm install && npm run
    ```
+   
+#Future Features
 
-*ALSO IMPORTANT!*
-   psycopg2-binary MUST remain a dev dependency because you can't install it on apline-linux.
-   There is a layer in the Dockerfile that will install psycopg2 (not binary) for us.
-***
-
-## Deploy to Heroku
-
-1. Create a new project on Heroku
-2. Under Resources click "Find more add-ons" and add the add on called "Heroku Postgres"
-3. Install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-command-line)
-4. Run
-
-   ```bash
-   heroku login
-   ```
-
-5. Login to the heroku container registry
-
-   ```bash
-   heroku container:login
-   ```
-
-6. Update the `REACT_APP_BASE_URL` variable in the Dockerfile.
-   This should be the full URL of your Heroku app: i.e. "https://flask-react-aa.herokuapp.com"
-7. Push your docker container to heroku from the root directory of your project.
-   This will build the dockerfile and push the image to your heroku container registry
-
-   ```bash
-   heroku container:push web -a {NAME_OF_HEROKU_APP}
-   ```
-
-8. Release your docker container to heroku
-
-   ```bash
-   heroku container:release web -a {NAME_OF_HEROKU_APP}
-   ```
-
-9. set up your database:
-
-   ```bash
-   heroku run -a {NAME_OF_HEROKU_APP} flask db upgrade
-   heroku run -a {NAME_OF_HEROKU_APP} flask seed all
-   ```
-
-10. Under Settings find "Config Vars" and add any additional/secret .env variables.
-
-11. profit
+- [ ] Ability to invite users to private boards.
+- [ ] Ability to direct message other users.
+- [ ] Moderation system (Banning, muting, etc.)
