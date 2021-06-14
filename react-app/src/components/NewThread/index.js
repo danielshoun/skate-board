@@ -88,6 +88,11 @@ const NewThread = () => {
             } else {
                 history.push(`/board/${boardId}/thread/${data.id}`);
             }
+        } else {
+            const data = await res.json();
+            if (data.errors) {
+                setErrors(data.errors);
+            }
         }
     }
 
@@ -119,7 +124,7 @@ const NewThread = () => {
                         onChange={(e) => setTitle(e.target.value)}
                     />
                     <div className="new-thread-error-div">
-                        {errors.name && errors.title.map((error, i) => {
+                        {errors.title && errors.title.map((error, i) => {
                             return (
                                 <div key={i}>{error}</div>
                             );
@@ -143,7 +148,7 @@ const NewThread = () => {
                         onChange={(e) => setPostText(e.target.value)}
                     />
                     <div className="log-reg-error-div">
-                        {errors.description && errors.description.map((error, i) => {
+                        {errors.first_post_body && errors.first_post_body.map((error, i) => {
                             return (
                                 <div key={i}>{error}</div>
                             );

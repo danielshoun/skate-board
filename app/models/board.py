@@ -13,6 +13,8 @@ class Board(db.Model):
 
     owner = db.relationship("User")
     members = db.relationship("User", secondary="memberships")
+    threads = db.relationship("Thread", cascade="all, delete")
+    smilies= db.relationship("Smilie", cascade="all, delete")
 
     def to_dict(self):
         return {

@@ -28,7 +28,7 @@ const NewReply = () => {
                         setPostText(data.post.body);
                         setThread(data.thread);
                     } else {
-                        setLoadError("You must be the owner of a post to edit it.")
+                        setLoadError("You must be the owner of a post to edit it.");
                     }
                 } else {
                     const data = await res.json();
@@ -88,13 +88,18 @@ const NewReply = () => {
             } else {
                 history.push(`/board/${boardId}/thread/${data.thread_id}`);
             }
+        } else {
+            const data = await res.json();
+            if (data.errors) {
+                setErrors(data.errors);
+            }
         }
     }
 
-    if(loadError) {
+    if (loadError) {
         return (
             <NotFound error={loadError}/>
-        )
+        );
     }
 
     return (
@@ -123,7 +128,7 @@ const NewReply = () => {
                         onChange={(e) => setPostText(e.target.value)}
                     />
                     <div className="log-reg-error-div">
-                        {errors.description && errors.description.map((error, i) => {
+                        {errors.body && errors.body.map((error, i) => {
                             return (
                                 <div key={i}>{error}</div>
                             );
