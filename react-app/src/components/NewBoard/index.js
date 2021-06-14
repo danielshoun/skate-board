@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useHistory, useParams} from "react-router-dom";
 import "./NewBoard.css";
+import {authenticate} from "../../store/session";
 import CustomRadioButton from "../common/CustomRadioButton";
 import NotFound from "../Errors/NotFound";
 import DeleteBoardModal from "./DeleteBoardModal";
@@ -9,6 +10,7 @@ import SmilieEditModal from "./SmilieEditModal";
 
 const NewBoard = () => {
     const user = useSelector(state => state.session.user);
+    const dispatch = useDispatch();
     const history = useHistory();
     const {boardId} = useParams();
     const [board, setBoard] = useState({});
@@ -92,6 +94,7 @@ const NewBoard = () => {
             if (data.errors) {
                 setErrors(data.errors);
             } else {
+                dispatch(authenticate());
                 history.push(`/board/${data.id}`);
             }
         } else {
