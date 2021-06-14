@@ -68,7 +68,6 @@ const BBCodeBar = ({inputRef, setter, boardId}) => {
         setter(input.value = textBeforeSelect + openTag + textInSelect + closeTag + textAfterSelect);
         input.focus();
         input.selectionStart = startSelect + openTag.length;
-        console.log(input.selectionStart)
         input.selectionEnd = endSelect + closeTag.length - 1;
     }
 

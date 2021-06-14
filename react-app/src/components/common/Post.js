@@ -18,19 +18,21 @@ const Post = ({post, thread, board, isFirstPost, smilies}) => {
 
     function replaceSmilies(input) {
         // Input: An array where elements are either strings or React components.
-        return input.map(el => {
-            if (typeof el === "string") {
-                let temp = el;
-                smilies.forEach(smilie => {
-                    temp = reactStringReplace(temp, smilie.name, (match, i) => {
-                        return <img key={`${smilie.name}_${i}`} src={smilie.url} alt={smilie.name}/>
+        if(input) {
+            return input.map(el => {
+                if (typeof el === "string") {
+                    let temp = el;
+                    smilies.forEach(smilie => {
+                        temp = reactStringReplace(temp, smilie.name, (match, i) => {
+                            return <img key={`${smilie.name}_${i}`} src={smilie.url} alt={smilie.name}/>
+                        })
                     })
-                })
-                return temp
-            } else {
-                return React.cloneElement(el, el.props, replaceSmilies(el.props.children))
-            }
-        });
+                    return temp
+                } else {
+                    return React.cloneElement(el, el.props, replaceSmilies(el.props.children))
+                }
+            });
+        }
     }
 
     return (

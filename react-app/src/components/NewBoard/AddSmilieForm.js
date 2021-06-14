@@ -47,7 +47,6 @@ const AddSmilieForm = ({goBack, boardId}) => {
             if(data.errors) {
                 setErrors(data.errors)
             }
-            console.log("error");
         }
     }
 
