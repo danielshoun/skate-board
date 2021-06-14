@@ -42,7 +42,7 @@ const SmilieModal = ({modalOpen, closeModal, boardId, input, setter}) => {
                 if (res.ok) {
                     const data = await res.json();
                     setDefaultSmilies(data.filter(smilie => smilie.board_id === null));
-                    setCustomSmilies(data.filter(smilie => smilie.board_id === boardId));
+                    setCustomSmilies(data.filter(smilie => smilie.board_id === Number(boardId)));
                 }
             })();
         }
