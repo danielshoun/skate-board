@@ -1,4 +1,4 @@
-#Skate Board
+# Skate Board
 
 Live Link: [Skate Board](https://skate-board-js.herokuapp.com)
 
@@ -10,7 +10,7 @@ chronological order, and users can style their posts using BBCode and smilie key
 
 Detailed information on the database schema and routing can be found in the [wiki](https://github.com/danielshoun/skate-board/wiki/MVP-Features).
 
-#Technologies
+# Technologies
 
 **Front End**
 - React
@@ -22,7 +22,7 @@ Detailed information on the database schema and routing can be found in the [wik
 - SQLAlchemy
 - PostgreSQL
 
-#Features
+# Features
 
 - User authentication system.
 - User created message boards that can be edited/deleted.
@@ -34,7 +34,7 @@ Detailed information on the database schema and routing can be found in the [wik
 - Users can include smilie keywords in their posts that will automatically be replaced with an image.
 - Board owners can upload custom smilies for use only within a certain board.
 
-#Usage
+# Usage
 
 To run this application:
 
@@ -73,7 +73,7 @@ To run this application:
    npm install && npm run
    ```
    
-#Future Features
+# Future Features
 
 - [ ] Ability to invite users to private boards.
 - [ ] Ability to direct message other users.
